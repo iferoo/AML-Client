@@ -1,0 +1,16 @@
+{
+    "data": [
+        {
+            "id": "1000",
+            "address": "f230fh0g3",
+            "city": "CAIRO",
+            "bank_id": 1
+        },
+        {
+            "id": "123132",
+            "address": "asdsadsad",
+            "city": "ASWAN",
+            "bank_id": 1
+        }
+    ]
+}
