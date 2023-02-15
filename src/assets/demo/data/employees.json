@@ -1,0 +1,80 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Taha",
+            "salary": 1000,
+            "email": "taha@gmail.com",
+            "bank": {
+                "id": 1,
+                "name": "CIB"
+            },
+            "branch": {
+                "id": 1,
+                "address": "Rod El Farags",
+                "city": "Cairo",
+                "bank": {
+                    "id": 1,
+                    "name": "CIB"
+                }
+            }
+        },
+        {
+            "id": 2,
+            "name": "Eyad",
+            "salary": 2000,
+            "email": "eyad@gmail.com",
+            "bank": {
+                "id": 1,
+                "name": "CIB"
+            },
+            "branch": {
+                "id": 1,
+                "address": "Rod El Farags",
+                "city": "Cairo",
+                "bank": {
+                    "id": 1,
+                    "name": "CIB"
+                }
+            }
+        },
+        {
+            "id": 3,
+            "name": "Ahmed",
+            "salary": 1000,
+            "email": "ahmed@gmail.com",
+            "bank": {
+                "id": 1,
+                "name": "CIB"
+            },
+            "branch": {
+                "id": 2,
+                "address": "Abden",
+                "city": "Cairo",
+                "bank": {
+                    "id": 1,
+                    "name": "CIB"
+                }
+            }
+        },
+        {
+            "id": 4,
+            "name": "moustafa",
+            "salary": 2000,
+            "email": "moustafa@gmail.com",
+            "bank": {
+                "id": 1,
+                "name": "CIB"
+            },
+            "branch": {
+                "id": 1,
+                "address": "Rod El Farags",
+                "city": "Cairo",
+                "bank": {
+                    "id": 1,
+                    "name": "CIB"
+                }
+            }
+        }
+    ]
+}

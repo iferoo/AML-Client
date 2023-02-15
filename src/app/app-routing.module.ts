@@ -11,7 +11,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 children: [
                     // {path: '', redirectTo: 'bank/branches', pathMatch: 'full'},
                     { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    { path: 'bank', loadChildren: () => import('./demo/components/bank/bank.module').then(m => m.BankModule) },
+                    { path: 'banks', loadChildren: () => import('./demo/components/bank/bank.module').then(m => m.BankModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },

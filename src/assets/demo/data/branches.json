@@ -1,16 +1,22 @@
 {
     "data": [
         {
-            "id": "1000",
-            "address": "f230fh0g3",
-            "city": "CAIRO",
-            "bank_id": 1
+            "id": "1",
+            "address": "Al Fawalah, Abdeen",
+            "city": "Cairo",
+            "bank": {
+                "id": 1,
+                "name": "CIB"
+            }
         },
         {
-            "id": "123132",
-            "address": "asdsadsad",
-            "city": "ASWAN",
-            "bank_id": 1
+            "id": "2",
+            "address": "Massara, Rod El Farag",
+            "city": "Cairo",
+            "bank": {
+                "id": 2,
+                "name": "BDC"
+            }
         }
     ]
 }

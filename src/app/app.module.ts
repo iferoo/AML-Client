@@ -12,6 +12,8 @@ import {IconService} from './demo/service/icon.service';
 import {NodeService} from './demo/service/node.service';
 import {PhotoService} from './demo/service/photo.service';
 import {BranchService} from './demo/service/branch.service';
+import {EmployeeService} from './demo/service/employee.service';
+import {BankService} from './demo/service/bank.service';
 
 @NgModule({
     declarations: [
@@ -24,8 +26,16 @@ import {BranchService} from './demo/service/branch.service';
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, BranchService
+        CountryService,
+        CustomerService,
+        EventService,
+        IconService,
+        NodeService,
+        PhotoService,
+        ProductService,
+        BranchService,
+        EmployeeService,
+        BankService
     ],
     bootstrap: [AppComponent]
 })

@@ -5,22 +5,37 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button (click)="openNew()" class="p-button-success mr-2" icon="pi pi-plus" label="New" pButton
-                                pRipple></button>
-                        <button (click)="deleteSelectedBranches()"
-                                [disabled]="!selectedBranches || !selectedBranches.length" class="p-button-danger"
-                                icon="pi pi-trash" label="Delete"
-                                pButton
-                                pRipple></button>
+                        <button
+                            (click)="openNew()"
+                            class="p-button-success mr-2"
+                            icon="pi pi-plus"
+                            label="New"
+                            pButton
+                            pRipple>
+                        </button>
+                        <button
+                            (click)="deleteSelectedBranches()"
+                            [disabled]="!selectedBranches || !selectedBranches.length"
+                            class="p-button-danger mr-2"
+                            icon="pi pi-trash"
+                            label="Delete"
+                            pButton
+                            pRipple>
+                        </button>
+                        <button
+                            (click)="dt.exportCSV()"
+                            class="p-button-help"
+                            icon="pi pi-upload"
+                            label="Export"
+                            pButton
+                            pRipple>
+                        </button>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="center">
-                    <p-fileUpload [maxFileSize]="1000000" accept="image/*" chooseLabel="Import"
-                                  class="mr-2 inline-block"
-                                  label="Import" mode="basic"></p-fileUpload>
-                    <button (click)="dt.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export" pButton
-                            pRipple></button>
+
+
                 </ng-template>
             </p-toolbar>
 
@@ -28,7 +43,7 @@
                 #dt
                 [(selection)]="selectedBranches"
                 [columns]="cols"
-                [globalFilterFields]="['name','country.name','representative.name','status']"
+                [globalFilterFields]="['id','address','city','bank.name']"
                 [paginator]="true"
                 [rowHover]="true"
                 [rowsPerPageOptions]="[10,20,30]"
@@ -45,7 +60,9 @@
                         <h5 class="m-0">Manage Branches</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input (input)="onGlobalFilter(dt, $event)" class="w-full sm:w-auto" pInputText
+                            <input (input)="onGlobalFilter(dt, $event)"
+                                   class="w-full sm:w-auto"
+                                   pInputText
                                    placeholder="Search..."
                                    type="text"/>
                         </span>
@@ -57,17 +74,17 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="code">Id
-                            <p-sortIcon field="code"></p-sortIcon>
+                        <th pSortableColumn="id">Id
+                            <p-sortIcon field="id"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="name">Address
-                            <p-sortIcon field="name"></p-sortIcon>
+                        <th pSortableColumn="address">Address
+                            <p-sortIcon field="address"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="price">Ciry
-                            <p-sortIcon field="price"></p-sortIcon>
+                        <th pSortableColumn="city">City
+                            <p-sortIcon field="city"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="category">Bank Id
-                            <p-sortIcon field="category"></p-sortIcon>
+                        <th pSortableColumn="bank">Bank
+                            <p-sortIcon field="bank"></p-sortIcon>
                         </th>
                         <th>Actions</th>
                     </tr>
@@ -91,8 +108,8 @@
                             {{branch.city}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Bank Id</span>
-                            {{branch.bank_id}}
+                            <span class="p-column-title">Bank</span>
+                            {{branch.bank.name}}
                         </td>
                         <td>
                             <div class="flex">
@@ -114,27 +131,32 @@
                   header="Branch Details">
             <ng-template pTemplate="content">
 
-                <div class="field">
-                    <label for="id">Id</label>
-                    <input [(ngModel)]="branch.id" [ngClass]="{'ng-invalid ng-dirty' : submitted && !branch.id}"
-                           disabled
-                           id="id" pInputText required
-                           type="text"/>
-                    <small *ngIf="submitted && !branch.id" class="ng-dirty ng-invalid">Name is required.</small>
-                </div>
+                <!--                <div class="field">-->
+                <!--                    <label for="id">Id</label>-->
+                <!--                    <input [(ngModel)]="branch.id" [ngClass]="{'ng-invalid ng-dirty' : submitted}"-->
+                <!--                           disabled-->
+                <!--                           id="id" pInputText required-->
+                <!--                           type="text"/>-->
+                <!--                    <small *ngIf="submitted && !branch.id" class="ng-dirty ng-invalid">id is required.</small>-->
+                <!--                </div>-->
+
                 <div class="field">
                     <label for="address">Address</label>
                     <input [(ngModel)]="branch.address"
                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !branch.address}"
                            autofocus id="address" pInputText required
                            type="text"/>
-                    <small *ngIf="submitted && !branch.address" class="ng-dirty ng-invalid">Name is required.</small>
+                    <small *ngIf="submitted && !branch.address" class="ng-dirty ng-invalid">Address is required.</small>
                 </div>
 
                 <div class="field">
                     <label>City</label>
-                    <p-dropdown [(ngModel)]="branch.city" [options]="statuses" inputId="City"
-                                optionValue="label" placeholder="Select">
+                    <p-dropdown
+                        [(ngModel)]="branch.city"
+                        [options]="statuses"
+                        inputId="city"
+                        optionValue="label"
+                        placeholder="Select">
                     </p-dropdown>
                 </div>
 
@@ -143,7 +165,7 @@
             <ng-template pTemplate="footer">
                 <button (click)="hideDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
                         pRipple></button>
-                <button (click)="saveProduct()" class="p-button-text" icon="pi pi-check" label="Save" pButton
+                <button (click)="saveBranch()" class="p-button-text" icon="pi pi-check" label="Save" pButton
                         pRipple></button>
             </ng-template>
 

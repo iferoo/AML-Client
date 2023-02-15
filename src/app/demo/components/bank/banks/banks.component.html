@@ -14,8 +14,8 @@
                             pRipple>
                         </button>
                         <button
-                            (click)="deleteSelectedEmployees()"
-                            [disabled]="!selectedEmployees || !selectedEmployees.length"
+                            (click)="deleteSelectedBanks()"
+                            [disabled]="!selectedBanks || !selectedBanks.length"
                             class="p-button-danger mr-2"
                             icon="pi pi-trash"
                             label="Delete"
@@ -33,22 +33,22 @@
 
             <p-table
                 #dt
-                [(selection)]="selectedEmployees"
+                [(selection)]="selectedBanks"
                 [columns]="cols"
-                [globalFilterFields]="['name','email','bank.name','branch.address']"
+                [globalFilterFields]="['id','name']"
                 [paginator]="true"
                 [rowHover]="true"
                 [rowsPerPageOptions]="[10,20,30]"
                 [rows]="10"
                 [rows]="10"
                 [showCurrentPageReport]="true"
-                [value]="employees"
+                [value]="banks"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"
                 responsiveLayout="scroll" selectionMode="multiple">
 
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Manage Employees</h5>
+                        <h5 class="m-0">Manage Banks</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input (input)="onGlobalFilter(dt, $event)" class="w-full sm:w-auto" pInputText
@@ -68,57 +68,30 @@
                         <th pSortableColumn="name">Name
                             <p-sortIcon field="name"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="salary">Salary
-                            <p-sortIcon field="salary"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="email">Email
-                            <p-sortIcon field="email"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="bank.name">Bank
-                            <p-sortIcon field="bank"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="branch.address">Branch
-                            <p-sortIcon field="branch"></p-sortIcon>
-                        </th>
                         <th>Actions</th>
                     </tr>
                 </ng-template>
-                <ng-template let-employee pTemplate="body">
+
+                <ng-template let-bank pTemplate="body">
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="bank"></p-tableCheckbox>
                         </td>
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
-                            {{employee.id}}
+                            {{bank.id}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Name</span>
-                            {{employee.name}}
-                        </td>
-                        <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">Salary</span>
-                            {{employee.salary}}
-                        </td>
-                        <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Email</span>
-                            {{employee.email}}
-                        </td>
-                        <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Bank</span>
-                            {{employee.bank.name}}
-                        </td>
-                        <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Branch</span>
-                            {{employee.branch.address}}
+                            {{bank.name}}
                         </td>
                         <td>
 
                             <div class="flex">
-                                <button (click)="editEmployee(employee)" class="p-button-rounded p-button-success mr-2"
+                                <button (click)="editBank(bank)" class="p-button-rounded p-button-success mr-2"
                                         icon="pi pi-pencil"
                                         pButton
                                         pRipple></button>
-                                <button (click)="deleteEmployee(employee)" class="p-button-rounded p-button-warning"
+                                <button (click)="deleteEmployee(bank)" class="p-button-rounded p-button-warning"
                                         icon="pi pi-trash" pButton
                                         pRipple></button>
                             </div>
@@ -128,7 +101,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="employeeDialog"
+        <p-dialog [(visible)]="bankDialog"
                   [modal]="true"
                   [style]="{width: '450px'}"
                   class="p-fluid"
@@ -136,47 +109,10 @@
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="name">Name</label>
-                    <input [(ngModel)]="employee.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.name}"
+                    <input [(ngModel)]="bank.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !bank.name}"
                            autofocus id="name" pInputText required
                            type="text"/>
-                    <small *ngIf="submitted && !employee.name" class="ng-dirty ng-invalid">Name is required.</small>
-                </div>
-                <div class="field">
-                    <label for="salary">Salary</label>
-                    <p-inputNumber [(ngModel)]="employee.salary" currency="EGP" id="salary" locale="en-US"
-                                   mode="currency">
-                    </p-inputNumber>
-                </div>
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input [(ngModel)]="employee.email"
-                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.email}"
-                           autofocus id="email"
-                           pInputText
-                           required
-                           type="email"/>
-                    <small *ngIf="submitted && !employee.email" class="ng-dirty ng-invalid">Email is required.</small>
-                </div>
-                <div class="field">
-                    <label for="bank">Bank</label>
-                    <input [(ngModel)]="employee.bank!.name!"
-                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.bank!.name}"
-                           autofocus disabled id="bank" pInputText
-                           required
-                           type="text"/>
-                    <small *ngIf="submitted && !employee.bank!.name" class="ng-dirty ng-invalid">Bank is
-                        required.</small>
-                </div>
-
-                <div class="field">
-                    <label>Branch</label>
-                    <p-dropdown
-                        [(ngModel)]="employee.branch"
-                        [options]="branches"
-                        inputId="branch"
-                        optionLabel="address"
-                        placeholder="Select">
-                    </p-dropdown>
+                    <small *ngIf="submitted && !bank.name" class="ng-dirty ng-invalid">Name is required.</small>
                 </div>
             </ng-template>
 
@@ -188,13 +124,13 @@
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteEmployeeDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
+        <p-dialog [(visible)]="deleteBankDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="employee">Are you sure you want to delete <b>{{employee.name}}</b>?</span>
+                <span *ngIf="bank">Are you sure you want to delete <b>{{bank.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button (click)="deleteEmployeeDialog = false" class="p-button-text" icon="pi pi-times" label="No"
+                <button (click)="deleteBankDialog = false" class="p-button-text" icon="pi pi-times" label="No"
                         pButton
                         pRipple></button>
                 <button (click)="confirmDelete()" class="p-button-text" icon="pi pi-check" label="Yes" pButton
@@ -202,13 +138,13 @@
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteEmployeesDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
+        <p-dialog [(visible)]="deleteBanksDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected products?</span>
+                <span>Are you sure you want to delete selected Banks?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button (click)="deleteEmployeesDialog = false" class="p-button-text" icon="pi pi-times" label="No"
+                <button (click)="deleteBanksDialog = false" class="p-button-text" icon="pi pi-times" label="No"
                         pButton
                         pRipple></button>
                 <button (click)="confirmDeleteSelected()" class="p-button-text" icon="pi pi-check" label="Yes" pButton

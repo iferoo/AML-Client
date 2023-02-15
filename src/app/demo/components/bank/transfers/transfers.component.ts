@@ -7,10 +7,10 @@ import {Employee} from '../../../api/employee';
 import {BranchService} from '../../../service/branch.service';
 
 @Component({
-    templateUrl: './employees.component.html',
+    templateUrl: './transfers.component.html',
     providers: [MessageService]
 })
-export class EmployeesComponent implements OnInit {
+export class TransfersComponent implements OnInit {
 
 
     employeeDialog: boolean = false;

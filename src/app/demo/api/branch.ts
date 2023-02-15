@@ -1,10 +1,8 @@
-interface City {
-    label: string;
-    value: string;
-}
+import {Bank} from './bank';
+
 export interface Branch {
-    id?: string;
+    id?: number;
     address?: string;
-    city?: City;
-    bank_id?: number;
+    city?: string;
+    bank?: Bank;
 }
