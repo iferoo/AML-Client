@@ -61,6 +61,7 @@ export class CustomersComponent implements OnInit {
 
     openNew() {
         this.customer = {
+            id: 0
         };
         this.submitted = false;
         this.customerDialog = true;
@@ -105,12 +106,13 @@ export class CustomersComponent implements OnInit {
     saveCustomer() {
         this.submitted = true;
 
-
         if (this.customer.id) {
+
             this.customerService.updateCustomer(this.customer).subscribe((customer: Customer) => {
-                this.customer = customer;
+                this.customers[this.findIndexById(customer.id)] = customer;
             });
-            this.customers[this.findIndexById(this.customer.id)] = this.customer;
+
+
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
@@ -118,10 +120,11 @@ export class CustomersComponent implements OnInit {
                 life: 3000
             });
         } else {
+
             this.customerService.addCustomer(this.customer).subscribe((customer: Customer) => {
-                this.customer = customer;
+                this.customers.push(customer);
             });
-            this.customers.push(this.customer);
+
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
@@ -129,10 +132,9 @@ export class CustomersComponent implements OnInit {
                 life: 3000
             });
         }
+
         this.customerDialog = false;
         this.customer = {};
-
-
     }
 
     findIndexById(id: number | undefined): number {

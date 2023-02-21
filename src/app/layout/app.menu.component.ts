@@ -29,7 +29,7 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/banks/customers']
                     },
                     {
-                        label: 'Banks Management',
+                        label: 'Bank',
                         icon: 'pi pi-fw pi-money-bill',
                         items: [
                             // {label: 'Banks', icon: 'pi pi-fw  pi-money-bill', routerLink: ['banks']},

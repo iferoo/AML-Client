@@ -28,11 +28,9 @@ export class BankCustomerService {
     }
 
     addCustomer(customer: BankCustomer): any {
-        let newCustomer = {};
-
         return this.http.post<BankCustomer>(
             'http://localhost:8080/api/customers',
-            newCustomer)
+            customer)
             .pipe(
                 map(customer => {
                     return customer;
@@ -44,12 +42,10 @@ export class BankCustomerService {
     }
 
     updateCustomer(customer: BankCustomer): any {
-        let newCustomer = {};
-
         return this.http
             .put(
                 'http://localhost:8080/api/customers',
-                newCustomer)
+                customer)
             .pipe(
                 map(branch => {
                     return branch;

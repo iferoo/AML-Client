@@ -4,6 +4,11 @@ import {Table} from 'primeng/table';
 import {AccountService} from '../../../service/account.service';
 import {Account} from '../../../api/account';
 import {BranchService} from '../../../service/branch.service';
+import {BankCustomerService} from '../../../service/bankCustomer.service';
+import {BankCustomer} from '../../../api/bankCustomer';
+import {Branch} from '../../../api/branch';
+import {EmployeeService} from '../../../service/employee.service';
+import {Employee} from '../../../api/employee';
 
 @Component({
     templateUrl: './accounts.component.html',
@@ -26,29 +31,40 @@ export class AccountsComponent implements OnInit {
     submitted: boolean = false;
 
     cols: any[] = [];
-
-    branches: any[] = [];
-
-
+    branches: Branch[] = [];
+    customers: BankCustomer[] = [];
+    employees: Employee[] = [];
+    accountTypes: string[] = [];
     rowsPerPageOptions = [5, 10, 20];
+    isEdit: boolean = true;
 
     constructor(
         private accountService: AccountService,
         private branchService: BranchService,
+        private bankCustomerService: BankCustomerService,
+        private employeeService: EmployeeService,
         private messageService: MessageService,
     ) {
     }
 
     ngOnInit() {
         this.accountService.fetchAccounts().subscribe(accounts => {
-            console.log(accounts);
             this.accounts = accounts;
         });
-        this.branchService.fetchBranches().subscribe(
-            branches => {
-                this.branches = branches;
-            }
-        );
+
+        this.branchService.fetchBranches().subscribe(branches => {
+            this.branches = branches;
+        });
+
+        this.bankCustomerService.fetchCustomers().subscribe(customers => {
+            this.customers = customers;
+        });
+
+        this.employeeService.fetchEmployees().subscribe(employees => {
+            this.employees = employees;
+        });
+
+        this.accountTypes = ['Saving', 'Current'];
 
         this.cols = [
             {field: 'id', header: 'Id'},
@@ -58,11 +74,13 @@ export class AccountsComponent implements OnInit {
             {field: 'employee.name', header: 'Employee'},
             {field: 'customer.name', header: 'Customer'}
         ];
-
     }
 
     openNew() {
-        this.account = {};
+        this.account = {
+            id: 0
+        };
+        this.isEdit = false;
         this.submitted = false;
         this.accountDialog = true;
     }
@@ -106,23 +124,25 @@ export class AccountsComponent implements OnInit {
     saveAccount() {
         this.submitted = true;
 
-
         if (this.account.id) {
+
             this.accountService.updateAccount(this.account).subscribe((account: Account) => {
-                this.account = account;
+                this.accounts[this.findIndexById(account.id)] = account;
             });
-            this.accounts[this.findIndexById(this.account.id)] = this.account;
+
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
                 detail: 'Account Updated',
                 life: 3000
             });
+
         } else {
+
             this.accountService.addAccount(this.account).subscribe((account: Account) => {
-                this.account = account;
+                this.accounts.push(account);
             });
-            this.accounts.push(this.account);
+
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',

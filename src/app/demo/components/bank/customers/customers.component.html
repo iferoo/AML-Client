@@ -120,50 +120,29 @@
                   class="p-fluid"
                   header="Product Details">
             <ng-template pTemplate="content">
-<!--                <div class="field">-->
-<!--                    <label for="name">Name</label>-->
-<!--                    <input [(ngModel)]="customer.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.name}"-->
-<!--                           autofocus id="name" pInputText required-->
-<!--                           type="text"/>-->
-<!--                    <small *ngIf="submitted && !customer.name" class="ng-dirty ng-invalid">Name is required.</small>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="salary">Salary</label>-->
-<!--                    <p-inputNumber [(ngModel)]="customer.salary" currency="EGP" id="salary" locale="en-US"-->
-<!--                                   mode="currency">-->
-<!--                    </p-inputNumber>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="email">Email</label>-->
-<!--                    <input [(ngModel)]="customer.email"-->
-<!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.email}"-->
-<!--                           autofocus id="email"-->
-<!--                           pInputText-->
-<!--                           required-->
-<!--                           type="email"/>-->
-<!--                    <small *ngIf="submitted && !customer.email" class="ng-dirty ng-invalid">Email is required.</small>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="bank">Bank</label>-->
-<!--                    <input [(ngModel)]="customer.bank!.name!"-->
-<!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.bank!.name}"-->
-<!--                           autofocus disabled id="bank" pInputText-->
-<!--                           required-->
-<!--                           type="text"/>-->
-<!--                    <small *ngIf="submitted && !customer.bank!.name" class="ng-dirty ng-invalid">Bank is-->
-<!--                        required.</small>-->
-<!--                </div>-->
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input [(ngModel)]="customer.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.name}"
+                           autofocus id="name" pInputText required
+                           type="text"/>
+                    <small *ngIf="submitted && !customer.name" class="ng-dirty ng-invalid">Name is required.</small>
+                </div>
 
-<!--                <div class="field">-->
-<!--                    <label>Branch</label>-->
-<!--                    <p-dropdown-->
-<!--                        [(ngModel)]="customer.branch"-->
-<!--                        [options]="branches"-->
-<!--                        inputId="branch"-->
-<!--                        optionLabel="address"-->
-<!--                        placeholder="Select">-->
-<!--                    </p-dropdown>-->
-<!--                </div>-->
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input [(ngModel)]="customer.email" [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.email}"
+                           autofocus id="email" pInputText required
+                           type="text"/>
+                    <small *ngIf="submitted && !customer.email" class="ng-dirty ng-invalid">Email is required.</small>
+                </div>
+
+                <div class="field">
+                    <label for="address">Address</label>
+                    <input [(ngModel)]="customer.address" [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.address}"
+                           autofocus id="address" pInputText required
+                           type="text"/>
+                    <small *ngIf="submitted && !customer.address" class="ng-dirty ng-invalid">Address is required.</small>
+                </div>
             </ng-template>
 
             <ng-template pTemplate="footer">

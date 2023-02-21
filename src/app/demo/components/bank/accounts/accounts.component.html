@@ -132,53 +132,92 @@
                   [modal]="true"
                   [style]="{width: '450px'}"
                   class="p-fluid"
-                  header="Product Details">
-<!--            <ng-template pTemplate="content">-->
+                  header="Account Details">
+            <ng-template pTemplate="content">
+
+                <div class="field">
+                    <label>Type</label>
+                    <p-dropdown
+                        [(ngModel)]="account.type"
+                        [options]="accountTypes"
+                        inputId="accountType"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label for="balance">Balance</label>
+                    <p-inputNumber [(ngModel)]="account.balance" currency="EGP" id="balance" locale="en-US"
+                                   mode="currency" [disabled]="isEdit">
+                    </p-inputNumber>
+                </div>
+
+                <div class="field">
+                    <label>Customer</label>
+                    <p-dropdown
+                        [(ngModel)]="account.customer"
+                        [options]="customers"
+                        inputId="customer"
+                        optionLabel="name"
+                        [disabled]="isEdit"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label>Branch</label>
+                    <p-dropdown
+                        [(ngModel)]="account.branch"
+                        [options]="branches"
+                        inputId="branch"
+                        optionLabel="address"
+                        [disabled]="isEdit"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label>Employee</label>
+                    <p-dropdown
+                        [(ngModel)]="account.employee"
+                        [options]="employees"
+                        inputId="employee"
+                        optionLabel="name"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+
 <!--                <div class="field">-->
-<!--                    <label for="name">Name</label>-->
+<!--                    <label for="name">Customer Name</label>-->
 <!--                    <input [(ngModel)]="account.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.name}"-->
 <!--                           autofocus id="name" pInputText required-->
 <!--                           type="text"/>-->
 <!--                    <small *ngIf="submitted && !account.name" class="ng-dirty ng-invalid">Name is required.</small>-->
 <!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="salary">Salary</label>-->
-<!--                    <p-inputNumber [(ngModel)]="account.salary" currency="EGP" id="salary" locale="en-US"-->
-<!--                                   mode="currency">-->
-<!--                    </p-inputNumber>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="email">Email</label>-->
-<!--                    <input [(ngModel)]="account.email"-->
-<!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.email}"-->
-<!--                           autofocus id="email"-->
-<!--                           pInputText-->
-<!--                           required-->
-<!--                           type="email"/>-->
-<!--                    <small *ngIf="submitted && !account.email" class="ng-dirty ng-invalid">Email is required.</small>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="bank">Bank</label>-->
-<!--                    <input [(ngModel)]="account.bank!.name!"-->
-<!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.bank!.name}"-->
-<!--                           autofocus disabled id="bank" pInputText-->
-<!--                           required-->
-<!--                           type="text"/>-->
-<!--                    <small *ngIf="submitted && !account.bank!.name" class="ng-dirty ng-invalid">Bank is-->
-<!--                        required.</small>-->
-<!--                </div>-->
 
-<!--                <div class="field">-->
-<!--                    <label>Branch</label>-->
-<!--                    <p-dropdown-->
-<!--                        [(ngModel)]="account.branch"-->
-<!--                        [options]="branches"-->
-<!--                        inputId="branch"-->
-<!--                        optionLabel="address"-->
-<!--                        placeholder="Select">-->
-<!--                    </p-dropdown>-->
-<!--                </div>-->
-<!--            </ng-template>-->
+                <!--                <div class="field">-->
+                <!--                    <label for="email">Email</label>-->
+                <!--                    <input [(ngModel)]="account.email"-->
+                <!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.email}"-->
+                <!--                           autofocus id="email"-->
+                <!--                           pInputText-->
+                <!--                           required-->
+                <!--                           type="email"/>-->
+                <!--                    <small *ngIf="submitted && !account.email" class="ng-dirty ng-invalid">Email is required.</small>-->
+                <!--                </div>-->
+                <!--                <div class="field">-->
+                <!--                    <label for="bank">Bank</label>-->
+                <!--                    <input [(ngModel)]="account.bank!.name!"-->
+                <!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.bank!.name}"-->
+                <!--                           autofocus disabled id="bank" pInputText-->
+                <!--                           required-->
+                <!--                           type="text"/>-->
+                <!--                    <small *ngIf="submitted && !account.bank!.name" class="ng-dirty ng-invalid">Bank is-->
+                <!--                        required.</small>-->
+                <!--                </div>-->
+
+
+            </ng-template>
 
             <ng-template pTemplate="footer">
                 <button (click)="hideDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton

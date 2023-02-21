@@ -7,6 +7,7 @@ import {Account} from '../api/account';
 export class AccountService {
     constructor(private http: HttpClient) {
     }
+
     fetchAccounts() {
         return this.http
             .get<Account[]>('http://localhost:8080/api/accounts')
@@ -28,6 +29,12 @@ export class AccountService {
 
     addAccount(account: Account): any {
         let newAccount = {
+            id: account.id,
+            type: account.type,
+            balance: account.balance,
+            customer: account.customer?.id,
+            employee: account.employee?.id,
+            branch: account.branch?.id
         };
 
         return this.http.post<Account>(
@@ -45,6 +52,12 @@ export class AccountService {
 
     updateAccount(account: Account): any {
         let newAccount = {
+            id: account.id,
+            type: account.type,
+            balance: account.balance,
+            customer: account.customer?.id,
+            employee: account.employee?.id,
+            branch: account.branch?.id
         };
 
         return this.http
