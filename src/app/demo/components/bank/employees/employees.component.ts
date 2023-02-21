@@ -42,12 +42,8 @@ export class EmployeesComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.employeeService.getEmployees().then(employees => {
-        //     console.log(employees);
-        //     this.employees = employees;
-        // });
-
         this.employeeService.fetchEmployees().subscribe(employees => {
+            console.log(employees);
             this.employees = employees;
         });
         this.branchService.fetchBranches().subscribe(
@@ -73,11 +69,12 @@ export class EmployeesComponent implements OnInit {
             name: '',
             email: '',
             salary: 0,
-            bank: {
-                id: 1,
-                name: 'CIB'
-            },
-            branch: {}
+            branch: {
+                bank: {
+                    id: 1,
+                    name: 'CIB'
+                },
+            }
         };
         this.submitted = false;
         this.employeeDialog = true;
@@ -125,9 +122,8 @@ export class EmployeesComponent implements OnInit {
 
         if (this.employee.id) {
             this.employeeService.updateEmployee(this.employee).subscribe((employee: Employee) => {
-                this.employee = employee;
+                this.employees[this.findIndexById(employee.id)] = employee;
             });
-            this.employees[this.findIndexById(this.employee.id)] = this.employee;
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
@@ -136,9 +132,8 @@ export class EmployeesComponent implements OnInit {
             });
         } else {
             this.employeeService.addEmployee(this.employee).subscribe((employee: Employee) => {
-                this.employee = employee;
+                this.employees.push(employee);
             });
-            this.employees.push(this.employee);
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',

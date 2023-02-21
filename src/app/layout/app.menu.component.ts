@@ -23,34 +23,31 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'System',
                 items: [
-                    {label: 'Banks', icon: 'pi pi-fw  pi-money-bill', routerLink: ['banks']},
-                    {label: 'Branches', icon: 'pi pi-fw pi-home', routerLink: ['/banks/branches']},
-                    {label: 'Employees', icon: 'pi pi-fw pi-users', routerLink: ['/banks/employees']},
-                    {
-                        label: 'Accounts',
-                        icon: 'pi pi-fw pi-user',
-                        routerLink: ['/banks/accounts']
-                    },
-                    {
-                        label: 'Transactions',
-                        icon: 'pi pi-fw pi-arrow-right-arrow-left',
-                        routerLink: ['/banks/transactions']
-                    },
                     {
                         label: 'Customers',
                         icon: 'pi pi-fw pi-users',
                         routerLink: ['/banks/customers']
                     },
                     {
-                        label: 'Transfers',
-                        icon: 'pi pi-fw pi-arrow-right-arrow-left',
-                        routerLink: ['/banks/transfers']
+                        label: 'Banks Management',
+                        icon: 'pi pi-fw pi-money-bill',
+                        items: [
+                            // {label: 'Banks', icon: 'pi pi-fw  pi-money-bill', routerLink: ['banks']},
+                            {label: 'Branches', icon: 'pi pi-fw pi-home', routerLink: ['/banks/branches']},
+                            {label: 'Employees', icon: 'pi pi-fw pi-users', routerLink: ['/banks/employees']},
+                            {
+                                label: 'Accounts',
+                                icon: 'pi pi-fw pi-user',
+                                routerLink: ['/banks/accounts']
+                            },
+
+                            {
+                                label: 'Transfers',
+                                icon: 'pi pi-fw pi-arrow-right-arrow-left',
+                                routerLink: ['/banks/transfers']
+                            },
+                        ]
                     },
-                    // {
-                    //     label: 'Banks Management',
-                    //     icon: 'pi pi-fw pi-money-bill',
-                    //     items: []
-                    // },
                     // {
                     //     label: 'Customers Management',
                     //     icon: 'pi pi-fw pi-users',
