@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
-import {ProductService} from 'src/app/demo/service/product.service';
-import {EmployeeService} from '../../../service/employee.service';
-import {Employee} from '../../../api/employee';
+import {Customer} from '../../../api/customer';
 import {BranchService} from '../../../service/branch.service';
+import {BankCustomerService} from '../../../service/bankCustomer.service';
+import {BankCustomer} from '../../../api/bankCustomer';
 
 @Component({
     templateUrl: './customers.component.html',
@@ -13,43 +13,37 @@ import {BranchService} from '../../../service/branch.service';
 export class CustomersComponent implements OnInit {
 
 
-    employeeDialog: boolean = false;
+    customerDialog: boolean = false;
 
-    deleteEmployeeDialog: boolean = false;
+    deleteCustomerDialog: boolean = false;
 
-    deleteEmployeesDialog: boolean = false;
+    deleteCustomersDialog: boolean = false;
 
-    employees: Employee[] = [];
+    customers: BankCustomer[] = [];
 
-    employee: Employee = {};
+    customer: BankCustomer = {};
 
-    selectedEmployees: Employee[] = [];
+    selectedCustomers: BankCustomer[] = [];
     submitted: boolean = false;
 
     cols: any[] = [];
 
     branches: any[] = [];
 
-
     rowsPerPageOptions = [5, 10, 20];
 
     constructor(
-        private productService: ProductService,
-        private employeeService: EmployeeService,
+        private customerService: BankCustomerService,
+        private branchService: BranchService,
         private messageService: MessageService,
-        private branchService: BranchService
     ) {
     }
 
     ngOnInit() {
-        // this.employeeService.getEmployees().then(employees => {
-        //     console.log(employees);
-        //     this.employees = employees;
-        // });
-
-        this.employeeService.fetchEmployees().subscribe(employees => {
-            this.employees = employees;
+        this.customerService.fetchCustomers().subscribe(customers => {
+            this.customers = customers;
         });
+
         this.branchService.fetchBranches().subscribe(
             branches => {
                 this.branches = branches;
@@ -59,104 +53,93 @@ export class CustomersComponent implements OnInit {
         this.cols = [
             {field: 'id', header: 'Id'},
             {field: 'name', header: 'Name'},
-            {field: 'salary', header: 'Salary'},
+            {field: 'address', header: 'Address'},
             {field: 'email', header: 'Email'},
-            {field: 'bank.name', header: 'Bank'},
-            {field: 'branch.address', header: 'Branch'}
         ];
 
     }
 
     openNew() {
-        this.employee = {
-            id: 0,
-            name: '',
-            email: '',
-            salary: 0,
-            bank: {
-                id: 1,
-                name: 'CIB'
-            },
-            branch: {}
+        this.customer = {
         };
         this.submitted = false;
-        this.employeeDialog = true;
+        this.customerDialog = true;
     }
 
-    deleteSelectedEmployees() {
-        this.deleteEmployeesDialog = true;
+    deleteSelectedCustomers() {
+        this.deleteCustomersDialog = true;
     }
 
-    editEmployee(employee: Employee) {
-        this.employee = {...employee};
-        this.employeeDialog = true;
+    editCustomer(customer: Customer) {
+        this.customer = {...customer};
+        this.customerDialog = true;
     }
 
-    deleteEmployee(employee: Employee) {
-        this.deleteEmployeeDialog = true;
-        this.employee = {...employee};
+    deleteCustomer(customer: Customer) {
+        this.deleteCustomerDialog = true;
+        this.customer = {...customer};
     }
 
     confirmDeleteSelected() {
-        this.deleteEmployeesDialog = false;
-        this.employeeService.deleteSelectedEmployees(this.selectedEmployees);
-        this.employees = this.employees.filter(employee => !this.selectedEmployees.includes(employee));
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Employees Deleted', life: 3000});
-        this.selectedEmployees = [];
+        this.deleteCustomersDialog = false;
+        this.customerService.deleteSelectedCustomers(this.selectedCustomers);
+        this.customers = this.customers.filter(customer => !this.selectedCustomers.includes(customer));
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Customers Deleted', life: 3000});
+        this.selectedCustomers = [];
     }
 
     confirmDelete() {
-        this.deleteEmployeeDialog = false;
-        this.employeeService.deleteEmployee(this.employee).subscribe((employee: Employee) => {
+        this.deleteCustomerDialog = false;
+        this.customerService.deleteCustomer(this.customer).subscribe((customer: Customer) => {
         });
-        this.employees = this.employees.filter(employee => employee.id !== this.employee.id);
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000});
-        this.employee = {};
+        this.customers = this.customers.filter(customer => customer.id !== this.customer.id);
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Customer Deleted', life: 3000});
+        this.customer = {};
     }
 
     hideDialog() {
-        this.employeeDialog = false;
+        this.customerDialog = false;
         this.submitted = false;
     }
 
-    saveEmployee() {
+    saveCustomer() {
         this.submitted = true;
 
 
-        if (this.employee.id) {
-            this.employeeService.updateEmployee(this.employee).subscribe((employee: Employee) => {
-                this.employee = employee;
+        if (this.customer.id) {
+            this.customerService.updateCustomer(this.customer).subscribe((customer: Customer) => {
+                this.customer = customer;
             });
-            this.employees[this.findIndexById(this.employee.id)] = this.employee;
+            this.customers[this.findIndexById(this.customer.id)] = this.customer;
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
-                detail: 'Employee Updated',
+                detail: 'Customer Updated',
                 life: 3000
             });
         } else {
-            this.employeeService.addEmployee(this.employee).subscribe((employee: Employee) => {
-                this.employee = employee;
+            this.customerService.addCustomer(this.customer).subscribe((customer: Customer) => {
+                this.customer = customer;
             });
-            this.employees.push(this.employee);
+            this.customers.push(this.customer);
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
-                detail: 'Employee Created',
+                detail: 'Customer Created',
                 life: 3000
             });
         }
-        this.employeeDialog = false;
-        this.employee = {};
+        this.customerDialog = false;
+        this.customer = {};
 
 
     }
 
     findIndexById(id: number | undefined): number {
         let index = -1;
-        for (let i = 0; i < this.employees.length; i++) {
+        for (let i = 0; i < this.customers.length; i++) {
             // @ts-ignore
-            if (this.employees[i].id === id) {
+            if (this.customers[i].id === id) {
                 index = i;
                 break;
             }

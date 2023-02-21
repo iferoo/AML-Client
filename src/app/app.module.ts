@@ -14,6 +14,8 @@ import {PhotoService} from './demo/service/photo.service';
 import {BranchService} from './demo/service/branch.service';
 import {EmployeeService} from './demo/service/employee.service';
 import {BankService} from './demo/service/bank.service';
+import {BankCustomerService} from './demo/service/bankCustomer.service';
+import {AccountService} from './demo/service/account.service';
 
 @NgModule({
     declarations: [
@@ -35,7 +37,9 @@ import {BankService} from './demo/service/bank.service';
         ProductService,
         BranchService,
         EmployeeService,
-        BankService
+        BankService,
+        BankCustomerService,
+        AccountService
     ],
     bootstrap: [AppComponent]
 })
