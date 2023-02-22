@@ -1,220 +1,284 @@
-<h1>transactions</h1>
-<!--<div class="grid">-->
-<!--    <div class="col-12">-->
-<!--        <div class="card px-6 py-6">-->
-<!--            <p-toast></p-toast>-->
-<!--            <p-toolbar styleClass="mb-4">-->
-<!--                <ng-template pTemplate="left">-->
-<!--                    <div class="my-2">-->
-<!--                        <button-->
-<!--                            (click)="openNew()"-->
-<!--                            class="p-button-success mr-2"-->
-<!--                            icon="pi pi-plus"-->
-<!--                            label="New"-->
-<!--                            pButton-->
-<!--                            pRipple>-->
-<!--                        </button>-->
-<!--                        <button-->
-<!--                            (click)="deleteSelectedEmployees()"-->
-<!--                            [disabled]="!selectedEmployees || !selectedEmployees.length"-->
-<!--                            class="p-button-danger mr-2"-->
-<!--                            icon="pi pi-trash"-->
-<!--                            label="Delete"-->
-<!--                            pButton-->
-<!--                            pRipple>-->
-<!--                        </button>-->
-<!--                        <button-->
-<!--                            (click)="dt.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export"-->
-<!--                            pButton-->
-<!--                            pRipple>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </ng-template>-->
-<!--            </p-toolbar>-->
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button
+                            (click)="openNew()"
+                            class="p-button-success mr-2"
+                            icon="pi pi-plus"
+                            label="New"
+                            pButton
+                            pRipple>
+                        </button>
+                        <button
+                            (click)="deleteSelectedTransfers()"
+                            [disabled]="!selectedTransfers || !selectedTransfers.length"
+                            class="p-button-danger mr-2"
+                            icon="pi pi-trash"
+                            label="Delete"
+                            pButton
+                            pRipple>
+                        </button>
+                        <button
+                            (click)="dt.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export"
+                            pButton
+                            pRipple>
+                        </button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
 
-<!--            <p-table-->
-<!--                #dt-->
-<!--                [(selection)]="selectedEmployees"-->
-<!--                [columns]="cols"-->
-<!--                [globalFilterFields]="['name','email','bank.name','branch.address']"-->
-<!--                [paginator]="true"-->
-<!--                [rowHover]="true"-->
-<!--                [rowsPerPageOptions]="[10,20,30]"-->
-<!--                [rows]="10"-->
-<!--                [rows]="10"-->
-<!--                [showCurrentPageReport]="true"-->
-<!--                [value]="employees"-->
-<!--                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"-->
-<!--                responsiveLayout="scroll" selectionMode="multiple">-->
+            <p-table
+                #dt
+                [(selection)]="selectedTransfers"
+                [columns]="cols"
+                [globalFilterFields]="['name','email','bank.name','branch.address']"
+                [paginator]="true"
+                [rowHover]="true"
+                [rowsPerPageOptions]="[10,20,30]"
+                [rows]="10"
+                [rows]="10"
+                [showCurrentPageReport]="true"
+                [value]="transfers"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"
+                responsiveLayout="scroll" selectionMode="multiple">
 
-<!--                <ng-template pTemplate="caption">-->
-<!--                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">-->
-<!--                        <h5 class="m-0">Manage Employees</h5>-->
-<!--                        <span class="block mt-2 md:mt-0 p-input-icon-left">-->
-<!--                            <i class="pi pi-search"></i>-->
-<!--                            <input (input)="onGlobalFilter(dt, $event)" class="w-full sm:w-auto" pInputText-->
-<!--                                   placeholder="Search..."-->
-<!--                                   type="text"/>-->
-<!--                        </span>-->
-<!--                    </div>-->
-<!--                </ng-template>-->
-<!--                <ng-template pTemplate="header">-->
-<!--                    <tr>-->
-<!--                        <th style="width: 3rem">-->
-<!--                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>-->
-<!--                        </th>-->
-<!--                        <th pSortableColumn="id">Id-->
-<!--                            <p-sortIcon field="id"></p-sortIcon>-->
-<!--                        </th>-->
-<!--                        <th pSortableColumn="name">Name-->
-<!--                            <p-sortIcon field="name"></p-sortIcon>-->
-<!--                        </th>-->
-<!--                        <th pSortableColumn="salary">Salary-->
-<!--                            <p-sortIcon field="salary"></p-sortIcon>-->
-<!--                        </th>-->
-<!--                        <th pSortableColumn="email">Email-->
-<!--                            <p-sortIcon field="email"></p-sortIcon>-->
-<!--                        </th>-->
-<!--                        <th pSortableColumn="bank.name">Bank-->
-<!--                            <p-sortIcon field="bank"></p-sortIcon>-->
-<!--                        </th>-->
-<!--                        <th pSortableColumn="branch.address">Branch-->
-<!--                            <p-sortIcon field="branch"></p-sortIcon>-->
-<!--                        </th>-->
-<!--                        <th>Actions</th>-->
-<!--                    </tr>-->
-<!--                </ng-template>-->
-<!--                <ng-template let-employee pTemplate="body">-->
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            <p-tableCheckbox [value]="employee"></p-tableCheckbox>-->
-<!--                        </td>-->
-<!--                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>-->
-<!--                            {{employee.id}}-->
-<!--                        </td>-->
-<!--                        <td style="width:14%; min-width:10rem;">-->
-<!--                            <span class="p-column-title">Name</span>-->
-<!--                            {{employee.name}}-->
-<!--                        </td>-->
-<!--                        <td style="width:14%; min-width:8rem;">-->
-<!--                            <span class="p-column-title">Salary</span>-->
-<!--                            {{employee.salary}}-->
-<!--                        </td>-->
-<!--                        <td style="width:14%; min-width:10rem;">-->
-<!--                            <span class="p-column-title">Email</span>-->
-<!--                            {{employee.email}}-->
-<!--                        </td>-->
-<!--                        <td style="width:14%; min-width:10rem;">-->
-<!--                            <span class="p-column-title">Bank</span>-->
-<!--                            {{employee.bank.name}}-->
-<!--                        </td>-->
-<!--                        <td style="width:14%; min-width:10rem;">-->
-<!--                            <span class="p-column-title">Branch</span>-->
-<!--                            {{employee.branch.address}}-->
-<!--                        </td>-->
-<!--                        <td>-->
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage Transfers</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input (input)="onGlobalFilter(dt, $event)" class="w-full sm:w-auto" pInputText
+                                   placeholder="Search..."
+                                   type="text"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="id">Id
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="method">Method
+                            <p-sortIcon field="method"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="operation">Operation
+                            <p-sortIcon field="operation"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="amount">Amount
+                            <p-sortIcon field="amount"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="sender">Sender Id
+                            <p-sortIcon field="sender"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="sender">Sender Name
+                            <p-sortIcon field="sender"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="sender">Reciever Id
+                            <p-sortIcon field="sender"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="sender">Reciever Name
+                            <p-sortIcon field="sender"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status">Status
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <!--                        <th pSortableColumn="branch.address">Branch-->
+                        <!--                            <p-sortIcon field="branch"></p-sortIcon>-->
+                        <!--                        </th>-->
+                        <!--                        <th>Actions</th>-->
+                    </tr>
+                </ng-template>
+                <ng-template let-transfer pTemplate="body">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="transfer"></p-tableCheckbox>
+                        </td>
 
-<!--                            <div class="flex">-->
-<!--                                <button (click)="editEmployee(employee)" class="p-button-rounded p-button-success mr-2"-->
-<!--                                        icon="pi pi-pencil"-->
-<!--                                        pButton-->
-<!--                                        pRipple></button>-->
-<!--                                <button (click)="deleteEmployee(employee)" class="p-button-rounded p-button-warning"-->
-<!--                                        icon="pi pi-trash" pButton-->
-<!--                                        pRipple></button>-->
-<!--                            </div>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                </ng-template>-->
-<!--            </p-table>-->
-<!--        </div>-->
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
+                            {{transfer.id}}
+                        </td>
 
-<!--        <p-dialog [(visible)]="employeeDialog"-->
-<!--                  [modal]="true"-->
-<!--                  [style]="{width: '450px'}"-->
-<!--                  class="p-fluid"-->
-<!--                  header="Product Details">-->
-<!--            <ng-template pTemplate="content">-->
-<!--                <div class="field">-->
-<!--                    <label for="name">Name</label>-->
-<!--                    <input [(ngModel)]="employee.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.name}"-->
-<!--                           autofocus id="name" pInputText required-->
-<!--                           type="text"/>-->
-<!--                    <small *ngIf="submitted && !employee.name" class="ng-dirty ng-invalid">Name is required.</small>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="salary">Salary</label>-->
-<!--                    <p-inputNumber [(ngModel)]="employee.salary" currency="EGP" id="salary" locale="en-US"-->
-<!--                                   mode="currency">-->
-<!--                    </p-inputNumber>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="email">Email</label>-->
-<!--                    <input [(ngModel)]="employee.email"-->
-<!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.email}"-->
-<!--                           autofocus id="email"-->
-<!--                           pInputText-->
-<!--                           required-->
-<!--                           type="email"/>-->
-<!--                    <small *ngIf="submitted && !employee.email" class="ng-dirty ng-invalid">Email is required.</small>-->
-<!--                </div>-->
-<!--                <div class="field">-->
-<!--                    <label for="bank">Bank</label>-->
-<!--                    <input [(ngModel)]="employee.bank!.name!"-->
-<!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.bank!.name}"-->
-<!--                           autofocus disabled id="bank" pInputText-->
-<!--                           required-->
-<!--                           type="text"/>-->
-<!--                    <small *ngIf="submitted && !employee.bank!.name" class="ng-dirty ng-invalid">Bank is-->
-<!--                        required.</small>-->
-<!--                </div>-->
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Method</span>
+                            {{transfer.transaction?.method | uppercase}}
+                        </td>
 
-<!--                <div class="field">-->
-<!--                    <label>Branch</label>-->
-<!--                    <p-dropdown-->
-<!--                        [(ngModel)]="employee.branch"-->
-<!--                        [options]="branches"-->
-<!--                        inputId="branch"-->
-<!--                        optionLabel="address"-->
-<!--                        placeholder="Select">-->
-<!--                    </p-dropdown>-->
-<!--                </div>-->
-<!--            </ng-template>-->
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Operation</span>
+                            {{transfer.transaction?.operation | uppercase}}
+                        </td>
 
-<!--            <ng-template pTemplate="footer">-->
-<!--                <button (click)="hideDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton-->
-<!--                        pRipple></button>-->
-<!--                <button (click)="saveEmployee()" class="p-button-text" icon="pi pi-check" label="Save" pButton-->
-<!--                        pRipple></button>-->
-<!--            </ng-template>-->
-<!--        </p-dialog>-->
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Amount</span>
+                            {{transfer.transaction?.amount}}
+                        </td>
 
-<!--        <p-dialog [(visible)]="deleteEmployeeDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">-->
-<!--            <div class="flex align-items-center justify-content-center">-->
-<!--                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>-->
-<!--                <span *ngIf="employee">Are you sure you want to delete <b>{{employee.name}}</b>?</span>-->
-<!--            </div>-->
-<!--            <ng-template pTemplate="footer">-->
-<!--                <button (click)="deleteEmployeeDialog = false" class="p-button-text" icon="pi pi-times" label="No"-->
-<!--                        pButton-->
-<!--                        pRipple></button>-->
-<!--                <button (click)="confirmDelete()" class="p-button-text" icon="pi pi-check" label="Yes" pButton-->
-<!--                        pRipple></button>-->
-<!--            </ng-template>-->
-<!--        </p-dialog>-->
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Sender ID</span>
+                            {{transfer.transaction?.account?.id}}
+                        </td>
 
-<!--        <p-dialog [(visible)]="deleteEmployeesDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">-->
-<!--            <div class="flex align-items-center justify-content-center">-->
-<!--                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>-->
-<!--                <span>Are you sure you want to delete selected products?</span>-->
-<!--            </div>-->
-<!--            <ng-template pTemplate="footer">-->
-<!--                <button (click)="deleteEmployeesDialog = false" class="p-button-text" icon="pi pi-times" label="No"-->
-<!--                        pButton-->
-<!--                        pRipple></button>-->
-<!--                <button (click)="confirmDeleteSelected()" class="p-button-text" icon="pi pi-check" label="Yes" pButton-->
-<!--                        pRipple></button>-->
-<!--            </ng-template>-->
-<!--        </p-dialog>-->
-<!--    </div>-->
-<!--</div>-->
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Sender Name</span>
+                            {{transfer.transaction?.account?.customer.name}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Reciever ID</span>
+                            {{transfer.reciever?.id}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Reciever Name</span>
+                            {{transfer.reciever?.customer.name}}
+                        </td>
+
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+                            <span
+                                [class]="'product-badge status-' + (transfer.status === 'approve' ? 'instock' : transfer.status === 'pending' ? 'lowstock':'outofstock')"
+                            >{{transfer.status}}</span>
+                        </td>
+
+                        <!--                        <td>-->
+
+                        <!--                            <div class="flex">-->
+                        <!--                                <button (click)="editTransfer(transfer)" class="p-button-rounded p-button-success mr-2"-->
+                        <!--                                        icon="pi pi-pencil"-->
+                        <!--                                        pButton-->
+                        <!--                                        pRipple></button>-->
+                        <!--                                <button (click)="deleteTransfer(transfer)" class="p-button-rounded p-button-warning"-->
+                        <!--                                        icon="pi pi-trash" pButton-->
+                        <!--                                        pRipple></button>-->
+                        <!--                            </div>-->
+                        <!--                        </td>-->
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="transferDialog"
+                  [modal]="true"
+                  [style]="{width: '450px'}"
+                  class="p-fluid"
+                  header="Product Details">
+            <ng-template pTemplate="content">
+
+                <div class="field">
+                    <label>Method</label>
+                    <p-dropdown
+                        [(ngModel)]="transfer.transaction.method"
+                        [options]="methods"
+                        inputId="method"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label>Operation</label>
+                    <p-dropdown
+                        [(ngModel)]="transfer.transaction.operation"
+                        [options]="operations"
+                        inputId="operation"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label for="amount">Amount</label>
+                    <p-inputNumber [(ngModel)]="transfer.transaction.amount" currency="EGP" id="amount" locale="en-US"
+                                   mode="currency">
+                    </p-inputNumber>
+                </div>
+
+                <div class="field">
+                    <label for="date">Date</label>
+                    <p-calendar
+                        [(ngModel)]="transfer.transaction.date"
+                        [showSeconds]="true" [showTime]="true" id="date"></p-calendar>
+                </div>
+
+                <div class="field">
+                    <label>Accounts</label>
+                    <p-dropdown
+                        [(ngModel)]="transfer.transaction.account"
+                        [options]="accounts"
+                        inputId="operation"
+                        optionLabel="id"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <label>Reciever</label>
+                    <p-dropdown
+                        [(ngModel)]="transfer.reciever"
+                        [options]="accounts"
+                        inputId="operation"
+                        optionLabel="id"
+                        placeholder="Select">
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label for="status">Status</label>
+                    <p-dropdown [(ngModel)]="transfer.status" [options]="statuses" id="status"
+                                optionValue="label" placeholder="Select">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="transfer && transfer.status"
+                                  [class]="'product-badge status-' + (transfer.status === 'approve' ? 'instock' : transfer.status === 'pending' ? 'lowstock':'outofstock')">
+                                {{transfer.status | uppercase}}</span>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'product-badge status-' + option.value">{{option.label | uppercase}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button (click)="hideDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                        pRipple></button>
+                <button (click)="saveTransfer()" class="p-button-text" icon="pi pi-check" label="Save" pButton
+                        pRipple></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteTransferDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="transfer">Are you sure you want to delete <b>{{transfer.id}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button (click)="deleteTransferDialog = false" class="p-button-text" icon="pi pi-times" label="No"
+                        pButton
+                        pRipple></button>
+                <button (click)="confirmDelete()" class="p-button-text" icon="pi pi-check" label="Yes" pButton
+                        pRipple></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteTransfersDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected products?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button (click)="deleteTransfersDialog = false" class="p-button-text" icon="pi pi-times" label="No"
+                        pButton
+                        pRipple></button>
+                <button (click)="confirmDeleteSelected()" class="p-button-text" icon="pi pi-check" label="Yes" pButton
+                        pRipple></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
