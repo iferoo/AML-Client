@@ -28,18 +28,9 @@ export class AccountService {
     }
 
     addAccount(account: Account): any {
-        let newAccount = {
-            id: account.id,
-            type: account.type,
-            balance: account.balance,
-            customer: account.customer?.id,
-            employee: account.employee?.id,
-            branch: account.branch?.id
-        };
-
         return this.http.post<Account>(
             'http://localhost:8080/api/accounts',
-            newAccount)
+            account)
             .pipe(
                 map(account => {
                     return account;
@@ -51,19 +42,10 @@ export class AccountService {
     }
 
     updateAccount(account: Account): any {
-        let newAccount = {
-            id: account.id,
-            type: account.type,
-            balance: account.balance,
-            customer: account.customer?.id,
-            employee: account.employee?.id,
-            branch: account.branch?.id
-        };
-
         return this.http
             .put(
                 'http://localhost:8080/api/accounts',
-                newAccount)
+                account)
             .pipe(
                 map(branch => {
                     return branch;

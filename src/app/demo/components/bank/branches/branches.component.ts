@@ -12,33 +12,22 @@ import {EgyptGovernments} from '../../../api/governments';
 export class BranchesComponent implements OnInit {
 
     branchDialog: boolean = false;
-
     deleteBranchDialog: boolean = false;
-
     deleteBranchesDialog: boolean = false;
-
     branches: Branch[] = [];
     branch: Branch = {};
-
     selectedBranches: Branch[] = [];
-
     submitted: boolean = false;
-
     cols: any[] = [];
-
     statuses: any[] = [];
-
-    // rowsPerPageOptions = [5, 10, 20];
 
     constructor(private branchService: BranchService, private messageService: MessageService) {
     }
 
     ngOnInit() {
-        this.branchService.fetchBranches().subscribe(
-            branches => {
-                this.branches = branches;
-            }
-        );
+        this.branchService.fetchBranches().subscribe(branches => {
+            this.branches = branches;
+        });
 
         this.cols = [
             {field: 'id', header: 'Id'},
@@ -95,41 +84,44 @@ export class BranchesComponent implements OnInit {
     saveBranch() {
         this.submitted = true;
 
-        if (this.branch.address?.trim()) {
-            if (this.branch.id) {
+        if (this.branch.address && this.branch.city) {
 
-                this.branchService.addAndUpdateBranch(this.branch).subscribe((branch: Branch) => {
-                });
-                this.branches[this.findIndexById(this.branch.id)] = this.branch;
+            if (this.branch.address?.trim()) {
+                if (this.branch.id) {
 
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Branch Updated',
-                    life: 3000
-                });
-            } else {
+                    this.branchService.updateBranch(this.branch).subscribe((branch: Branch) => {
+                    });
+                    this.branches[this.findIndexById(this.branch.id)] = this.branch;
 
-                this.branch.id = 0;
-                this.branch.bank = {
-                    id: 1,
-                    name: 'CIB'
-                };
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Branch Updated',
+                        life: 3000
+                    });
+                } else {
 
-                this.branchService.addAndUpdateBranch(this.branch).subscribe((branch: Branch) => {
-                    this.branches.push(branch);
-                });
+                    this.branch.id = 0;
 
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Branch Created',
-                    life: 3000
-                });
+                    this.branch.bank = {
+                        id: 1,
+                        name: 'CIB'
+                    };
+
+                    this.branchService.addBranch(this.branch).subscribe((branch: Branch) => {
+                        this.branches.push(branch);
+                    });
+
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Branch Created',
+                        life: 3000
+                    });
+                }
+                this.branchDialog = false;
+                this.branch = {};
             }
-
-            this.branchDialog = false;
-            this.branch = {};
         }
     }
 

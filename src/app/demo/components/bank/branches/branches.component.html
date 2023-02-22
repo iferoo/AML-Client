@@ -130,16 +130,6 @@
         <p-dialog [(visible)]="branchDialog" [modal]="true" [style]="{width: '450px'}" class="p-fluid"
                   header="Branch Details">
             <ng-template pTemplate="content">
-
-                <!--                <div class="field">-->
-                <!--                    <label for="id">Id</label>-->
-                <!--                    <input [(ngModel)]="branch.id" [ngClass]="{'ng-invalid ng-dirty' : submitted}"-->
-                <!--                           disabled-->
-                <!--                           id="id" pInputText required-->
-                <!--                           type="text"/>-->
-                <!--                    <small *ngIf="submitted && !branch.id" class="ng-dirty ng-invalid">id is required.</small>-->
-                <!--                </div>-->
-
                 <div class="field">
                     <label for="address">Address</label>
                     <input [(ngModel)]="branch.address"
@@ -156,8 +146,11 @@
                         [options]="statuses"
                         inputId="city"
                         optionValue="label"
-                        placeholder="Select">
+                        placeholder="Select"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !branch.city}"
+                    >
                     </p-dropdown>
+                    <small *ngIf="submitted && !branch.address" class="ng-dirty ng-invalid">City is required.</small>
                 </div>
 
             </ng-template>
@@ -188,7 +181,7 @@
         <p-dialog [(visible)]="deleteBranchesDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected products?</span>
+                <span>Are you sure you want to delete selected branches?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button (click)="deleteBranchesDialog = false" class="p-button-text" icon="pi pi-times" label="No"

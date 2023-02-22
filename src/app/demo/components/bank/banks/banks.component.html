@@ -106,13 +106,18 @@
                   [style]="{width: '450px'}"
                   class="p-fluid"
                   header="Product Details">
+
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="name">Name</label>
-                    <input [(ngModel)]="bank.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !bank.name}"
-                           autofocus id="name" pInputText required
-                           type="text"/>
-                    <small *ngIf="submitted && !bank.name" class="ng-dirty ng-invalid">Name is required.</small>
+                    <input
+                        [(ngModel)]="bank.name"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !bank.name}"
+                        autofocus id="name"
+                        pInputText
+                        required
+                        type="text"/>
+                    <small *ngIf="submitted && !bank.name" class="ng-dirty ng-invalid">Bank Name is required.</small>
                 </div>
             </ng-template>
 

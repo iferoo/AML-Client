@@ -13,15 +13,15 @@
                             pButton
                             pRipple>
                         </button>
-                        <button
-                            (click)="deleteSelectedTransfers()"
-                            [disabled]="!selectedTransfers || !selectedTransfers.length"
-                            class="p-button-danger mr-2"
-                            icon="pi pi-trash"
-                            label="Delete"
-                            pButton
-                            pRipple>
-                        </button>
+                        <!--                        <button-->
+                        <!--                            (click)="deleteSelectedTransfers()"-->
+                        <!--                            [disabled]="!selectedTransfers || !selectedTransfers.length"-->
+                        <!--                            class="p-button-danger mr-2"-->
+                        <!--                            icon="pi pi-trash"-->
+                        <!--                            label="Delete"-->
+                        <!--                            pButton-->
+                        <!--                            pRipple>-->
+                        <!--                        </button>-->
                         <button
                             (click)="dt.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export"
                             pButton
@@ -35,7 +35,7 @@
                 #dt
                 [(selection)]="selectedTransfers"
                 [columns]="cols"
-                [globalFilterFields]="['name','email','bank.name','branch.address']"
+                [globalFilterFields]="['id','transaction.method','transaction.operation','branch.address']"
                 [paginator]="true"
                 [rowHover]="true"
                 [rowsPerPageOptions]="[10,20,30]"
@@ -146,18 +146,6 @@
                             >{{transfer.status}}</span>
                         </td>
 
-                        <!--                        <td>-->
-
-                        <!--                            <div class="flex">-->
-                        <!--                                <button (click)="editTransfer(transfer)" class="p-button-rounded p-button-success mr-2"-->
-                        <!--                                        icon="pi pi-pencil"-->
-                        <!--                                        pButton-->
-                        <!--                                        pRipple></button>-->
-                        <!--                                <button (click)="deleteTransfer(transfer)" class="p-button-rounded p-button-warning"-->
-                        <!--                                        icon="pi pi-trash" pButton-->
-                        <!--                                        pRipple></button>-->
-                        <!--                            </div>-->
-                        <!--                        </td>-->
                     </tr>
                 </ng-template>
             </p-table>
@@ -173,74 +161,110 @@
                 <div class="field">
                     <label>Method</label>
                     <p-dropdown
-                        [(ngModel)]="transfer.transaction.method"
+                        [(ngModel)]="transfer.transaction!.method"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.method}"
                         [options]="methods"
                         inputId="method"
+                        optionDisabled="inactive"
                         optionLabel="label"
                         optionValue="value"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !transfer.transaction!.method" class="ng-dirty ng-invalid">Method is
+                        required.</small>
                 </div>
 
                 <div class="field">
                     <label>Operation</label>
                     <p-dropdown
-                        [(ngModel)]="transfer.transaction.operation"
+                        [(ngModel)]="transfer.transaction!.operation"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.operation}"
                         [options]="operations"
                         inputId="operation"
+                        optionDisabled="inactive"
                         optionLabel="label"
                         optionValue="value"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !transfer.transaction!.operation" class="ng-dirty ng-invalid">Operation is
+                        required.</small>
                 </div>
 
                 <div class="field">
                     <label for="amount">Amount</label>
-                    <p-inputNumber [(ngModel)]="transfer.transaction.amount" currency="EGP" id="amount" locale="en-US"
-                                   mode="currency">
+                    <p-inputNumber
+                        [(ngModel)]="transfer.transaction!.amount"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.amount}"
+                        currency="EGP"
+                        id="amount"
+                        locale="en-US"
+                        mode="currency">
                     </p-inputNumber>
+                    <small *ngIf="submitted && !transfer.transaction!.amount" class="ng-dirty ng-invalid">Amount is
+                        required.</small>
                 </div>
 
                 <div class="field">
                     <label for="date">Date</label>
                     <p-calendar
-                        [(ngModel)]="transfer.transaction.date"
-                        [showSeconds]="true" [showTime]="true" id="date"></p-calendar>
+                        [(ngModel)]="transfer.transaction!.date"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.date}"
+                        [showSeconds]="true"
+                        [showTime]="true" disabled id="date"></p-calendar>
+                    <small *ngIf="submitted && !transfer.transaction!.date" class="ng-dirty ng-invalid">Date is
+                        required.</small>
                 </div>
 
                 <div class="field">
-                    <label>Accounts</label>
+                    <label>Sender</label>
                     <p-dropdown
-                        [(ngModel)]="transfer.transaction.account"
+                        [(ngModel)]="transfer.transaction!.account"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.account!.id}"
                         [options]="accounts"
                         inputId="operation"
                         optionLabel="id"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !transfer.transaction!.account!.id" class="ng-dirty ng-invalid">Sender is
+                        required.</small>
                 </div>
                 <div class="field">
                     <label>Reciever</label>
                     <p-dropdown
                         [(ngModel)]="transfer.reciever"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.reciever?.id}"
                         [options]="accounts"
                         inputId="operation"
                         optionLabel="id"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !transfer.reciever?.id" class="ng-dirty ng-invalid">Reciever is
+                        required.</small>
                 </div>
 
                 <div class="field">
                     <label for="status">Status</label>
-                    <p-dropdown [(ngModel)]="transfer.status" [options]="statuses" id="status"
-                                optionValue="label" placeholder="Select">
-                        <ng-template pTemplate="selectedItem">
-                            <span *ngIf="transfer && transfer.status"
-                                  [class]="'product-badge status-' + (transfer.status === 'approve' ? 'instock' : transfer.status === 'pending' ? 'lowstock':'outofstock')">
+                    <p-dropdown
+                        [(ngModel)]="transfer.status"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.status}"
+                        [options]="statuses"
+                        id="status"
+                        optionDisabled="inactive"
+                        optionValue="label"
+                        placeholder="Select">
+                        <ng-template
+                            pTemplate="selectedItem">
+                            <span
+                                *ngIf="transfer && transfer.status"
+                                [class]="'product-badge status-' + (transfer.status === 'approve' ? 'instock' : transfer.status === 'pending' ? 'lowstock':'outofstock')">
                                 {{transfer.status | uppercase}}</span>
                         </ng-template>
-                        <ng-template let-option pTemplate="item">
+                        <ng-template
+                            let-option pTemplate="item">
                             <span [class]="'product-badge status-' + option.value">{{option.label | uppercase}}</span>
                         </ng-template>
+                        <small *ngIf="submitted && !transfer.status" class="ng-dirty ng-invalid">Status is
+                            required.</small>
                     </p-dropdown>
                 </div>
             </ng-template>
@@ -270,7 +294,7 @@
         <p-dialog [(visible)]="deleteTransfersDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected products?</span>
+                <span>Are you sure you want to delete selected transfers?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button (click)="deleteTransfersDialog = false" class="p-button-text" icon="pi pi-times" label="No"

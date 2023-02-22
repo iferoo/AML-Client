@@ -28,16 +28,16 @@ export class TransferService {
     }
 
     addTransfer(transfer: Transfer): any {
-        let newTransfer = {
-            id: transfer.id,
-            transaction: transfer.transaction.id,
-            reciever: transfer.reciever?.id,
-            status: transfer.status,
-        };
+        // let newTransfer = {
+        //     id: transfer.id,
+        //     transaction: transfer.transaction?.id,
+        //     reciever: transfer.reciever?.id,
+        //     status: transfer.status,
+        // };
 
         return this.http.post<Transfer>(
             'http://localhost:8080/api/transfers',
-            newTransfer)
+            transfer)
             .pipe(
                 map(transfer => {
                     return transfer;
@@ -54,7 +54,7 @@ export class TransferService {
         return this.http
             .put(
                 'http://localhost:8080/api/transfers',
-                newTransfer)
+                transfer)
             .pipe(
                 map(branch => {
                     return branch;

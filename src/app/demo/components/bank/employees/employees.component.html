@@ -132,21 +132,34 @@
                   [modal]="true"
                   [style]="{width: '450px'}"
                   class="p-fluid"
-                  header="Product Details">
+                  header="Employee Details">
             <ng-template pTemplate="content">
+
                 <div class="field">
                     <label for="name">Name</label>
-                    <input [(ngModel)]="employee.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.name}"
-                           autofocus id="name" pInputText required
-                           type="text"/>
-                    <small *ngIf="submitted && !employee.name" class="ng-dirty ng-invalid">Name is required.</small>
+                    <input
+                        [(ngModel)]="employee.name"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.name}"
+                        autofocus id="name"
+                        pInputText
+                        required
+                        type="text"/>
+                    <small *ngIf="submitted && !employee.name" class="ng-dirty ng-invalid">Employee Name is
+                        required.</small>
                 </div>
+
                 <div class="field">
                     <label for="salary">Salary</label>
-                    <p-inputNumber [(ngModel)]="employee.salary" currency="EGP" id="salary" locale="en-US"
-                                   mode="currency">
+                    <p-inputNumber
+                        [(ngModel)]="employee.salary"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.salary}" currency="EGP"
+                        id="salary"
+                        locale="en-US"
+                        mode="currency">
                     </p-inputNumber>
+                    <small *ngIf="submitted && !employee.salary" class="ng-dirty ng-invalid">Salary is required.</small>
                 </div>
+
                 <div class="field">
                     <label for="email">Email</label>
                     <input [(ngModel)]="employee.email"
@@ -159,13 +172,13 @@
                 </div>
                 <div class="field">
                     <label for="bank">Bank</label>
-                    <input [(ngModel)]="employee.branch!.bank!.name!"
-                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.branch!.bank!.name}"
-                           autofocus disabled id="bank" pInputText
-                           required
-                           type="text"/>
-                    <small *ngIf="submitted && !employee.branch!.bank!.name" class="ng-dirty ng-invalid">Bank is
-                        required.</small>
+                    <input
+                        [(ngModel)]="employee.branch!.bank!.name!"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.branch!.bank!.name}"
+                        autofocus disabled id="bank" pInputText
+                        required
+                        type="text"/>
+                    <small *ngIf="submitted && !employee.branch!.bank!.name" class="ng-dirty ng-invalid">Bank is required.</small>
                 </div>
 
                 <div class="field">
@@ -175,9 +188,11 @@
                         [options]="branches"
                         inputId="branch"
                         optionLabel="address"
-                        placeholder="Select">
+                        placeholder="Select"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.branch?.address}">
                     </p-dropdown>
                 </div>
+                <small *ngIf="submitted && !employee.branch?.address" class="ng-dirty ng-invalid">Branch is required.</small>
             </ng-template>
 
             <ng-template pTemplate="footer">
@@ -205,7 +220,7 @@
         <p-dialog [(visible)]="deleteEmployeesDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected products?</span>
+                <span>Are you sure you want to delete selected employees?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button (click)="deleteEmployeesDialog = false" class="p-button-text" icon="pi pi-times" label="No"

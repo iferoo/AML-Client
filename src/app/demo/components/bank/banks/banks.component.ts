@@ -11,26 +11,16 @@ import {BankService} from '../../../service/bank.service';
 })
 export class BanksComponent implements OnInit {
 
-
     bankDialog: boolean = false;
-
     deleteBankDialog: boolean = false;
-
     deleteBanksDialog: boolean = false;
-
     banks: Bank[] = [];
-
     bank: Bank = {};
-
     selectedBanks: Bank[] = [];
     submitted: boolean = false;
-
     cols: any[] = [];
-
     branches: any[] = [];
 
-
-    rowsPerPageOptions = [5, 10, 20];
 
     constructor(
         private bankService: BankService,
@@ -39,10 +29,6 @@ export class BanksComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.bankService.getEmployees().then(banks => {
-        //     console.log(banks);
-        //     this.banks = banks;
-        // });
 
         this.bankService.fetchBanks().subscribe(banks => {
             this.banks = banks;
@@ -99,37 +85,37 @@ export class BanksComponent implements OnInit {
 
     saveEmployee() {
         this.submitted = true;
+        if (this.bank.name) {
+            if (this.bank.id) {
 
-        if (this.bank.id) {
+                this.bankService.updateBank(this.bank).subscribe((bank: Bank) => {
+                    this.banks[this.findIndexById(bank.id)] = bank;
+                });
 
-            this.bankService.updateBank(this.bank).subscribe((bank: Bank) => {
-                this.banks[this.findIndexById(bank.id)] = bank;
-            });
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Bank Updated',
+                    life: 3000
+                });
 
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Bank Updated',
-                life: 3000
-            });
+            } else {
 
-        } else {
+                this.bankService.addBank(this.bank).subscribe((bank: Bank) => {
+                    this.banks.push(bank);
+                });
 
-            this.bankService.addBank(this.bank).subscribe((bank: Bank) => {
-                this.banks.push(bank);
-            });
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Bank Created',
+                    life: 3000
+                });
+            }
+            this.bankDialog = false;
+            this.bank = {};
 
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Bank Created',
-                life: 3000
-            });
         }
-        this.bankDialog = false;
-        this.bank = {};
-
-
     }
 
     findIndexById(id: number | undefined): number {

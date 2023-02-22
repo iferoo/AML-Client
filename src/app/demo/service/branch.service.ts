@@ -27,44 +27,34 @@ export class BranchService {
             );
     }
 
-    addAndUpdateBranch(branch: Branch): any {
-        if (branch.id) {
-            //update
-            return this.http
-                .put(
-                    'http://localhost:8080/api/branches',
-                    branch)
-                .pipe(
-                    map(branch => {
-                        return branch;
-                    }),
-                    catchError(error => {
-                        return throwError(error);
-                    })
-                );
-        } else {
-            //add
-            let newBranch = {
-                id: branch.id,
-                address: branch.address,
-                city: branch.city,
-                bank: branch.bank?.id
-            };
+    addBranch(branch: Branch): any {
+        return this.http.post<Branch>(
+            'http://localhost:8080/api/branches',
+            branch)
+            .pipe(
+                map(branch => {
+                    return branch;
+                }),
+                catchError(error => {
+                    return throwError(error);
+                })
+            );
 
-            return this.http.post<Branch>(
+    }
+
+    updateBranch(branch: Branch): any {
+        return this.http
+            .put(
                 'http://localhost:8080/api/branches',
-                newBranch)
-                .pipe(
-                    map(branch => {
-                        return branch;
-                    }),
-                    catchError(error => {
-                        return throwError(error);
-                    })
-                );
-
-        }
-
+                branch)
+            .pipe(
+                map(branch => {
+                    return branch;
+                }),
+                catchError(error => {
+                    return throwError(error);
+                })
+            );
     }
 
     deleteBranch(branch: Branch) {

@@ -105,36 +105,37 @@ export class CustomersComponent implements OnInit {
 
     saveCustomer() {
         this.submitted = true;
+        if (this.customer.name && this.customer.address && this.customer.email) {
+            if (this.customer.id) {
 
-        if (this.customer.id) {
-
-            this.customerService.updateCustomer(this.customer).subscribe((customer: Customer) => {
-                this.customers[this.findIndexById(customer.id)] = customer;
-            });
+                this.customerService.updateCustomer(this.customer).subscribe((customer: Customer) => {
+                    this.customers[this.findIndexById(customer.id)] = customer;
+                });
 
 
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Customer Updated',
-                life: 3000
-            });
-        } else {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Customer Updated',
+                    life: 3000
+                });
+            } else {
 
-            this.customerService.addCustomer(this.customer).subscribe((customer: Customer) => {
-                this.customers.push(customer);
-            });
+                this.customerService.addCustomer(this.customer).subscribe((customer: Customer) => {
+                    this.customers.push(customer);
+                });
 
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Customer Created',
-                life: 3000
-            });
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Customer Created',
+                    life: 3000
+                });
+            }
+
+            this.customerDialog = false;
+            this.customer = {};
         }
-
-        this.customerDialog = false;
-        this.customer = {};
     }
 
     findIndexById(id: number | undefined): number {

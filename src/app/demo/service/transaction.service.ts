@@ -41,13 +41,10 @@ export class TransactionService {
     }
 
     updateTransaction(transaction: Transaction): any {
-        let newTransaction = {
-        };
-
         return this.http
             .put(
                 'http://localhost:8080/api/transactions',
-                newTransaction)
+                transaction)
             .pipe(
                 map(branch => {
                     return branch;

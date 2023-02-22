@@ -7,14 +7,6 @@ import {Employee} from '../api/employee';
 export class EmployeeService {
     constructor(private http: HttpClient) {
     }
-
-    // getEmployees() {
-    //     return this.http.get<any>('assets/demo/data/employees.json')
-    //         .toPromise()
-    //         .then(res => res.data as Employee[])
-    //         .then(data => data);
-    // }
-
     fetchEmployees() {
         return this.http
             .get<Employee[]>('http://localhost:8080/api/employees')
@@ -35,18 +27,9 @@ export class EmployeeService {
     }
 
     addEmployee(employee: Employee): any {
-        let newEmployee = {
-            id: employee.id,
-            name: employee.name,
-            salary: employee.salary,
-            email: employee.email,
-            bank: employee.bank?.id,
-            branch: employee.branch?.id,
-        };
-
         return this.http.post<Employee>(
             'http://localhost:8080/api/employees',
-            newEmployee)
+            employee)
             .pipe(
                 map(employee => {
                     return employee;
@@ -58,19 +41,10 @@ export class EmployeeService {
     }
 
     updateEmployee(employee: Employee): any {
-        let newEmployee = {
-            id: employee.id,
-            name: employee.name,
-            salary: employee.salary,
-            email: employee.email,
-            bank: employee.bank?.id,
-            branch: employee.branch?.id,
-        };
-
         return this.http
             .put(
                 'http://localhost:8080/api/employees',
-                newEmployee)
+                employee)
             .pipe(
                 map(branch => {
                     return branch;

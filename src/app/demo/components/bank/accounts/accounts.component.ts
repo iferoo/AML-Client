@@ -16,20 +16,13 @@ import {Employee} from '../../../api/employee';
 })
 export class AccountsComponent implements OnInit {
 
-
     accountDialog: boolean = false;
-
     deleteAccountDialog: boolean = false;
-
     deleteAccountsDialog: boolean = false;
-
     accounts: Account[] = [];
-
     account: Account = {};
-
     selectedAccounts: Account[] = [];
     submitted: boolean = false;
-
     cols: any[] = [];
     branches: Branch[] = [];
     customers: BankCustomer[] = [];
@@ -78,7 +71,8 @@ export class AccountsComponent implements OnInit {
 
     openNew() {
         this.account = {
-            id: 0
+            id: 0,
+            balance: 0
         };
         this.isEdit = false;
         this.submitted = false;
@@ -123,37 +117,38 @@ export class AccountsComponent implements OnInit {
 
     saveAccount() {
         this.submitted = true;
+        console.log(this.account);
+        // @ts-ignore
+        if (this.account.type && this.account.balance > 0 && this.account.customer?.id && this.account.branch?.id && this.account.employee?.id) {
+            if (this.account.id) {
 
-        if (this.account.id) {
+                this.accountService.updateAccount(this.account).subscribe((account: Account) => {
+                    this.accounts[this.findIndexById(account.id)] = account;
+                });
 
-            this.accountService.updateAccount(this.account).subscribe((account: Account) => {
-                this.accounts[this.findIndexById(account.id)] = account;
-            });
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Account Updated',
+                    life: 3000
+                });
 
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Account Updated',
-                life: 3000
-            });
+            } else {
 
-        } else {
+                this.accountService.addAccount(this.account).subscribe((account: Account) => {
+                    this.accounts.push(account);
+                });
 
-            this.accountService.addAccount(this.account).subscribe((account: Account) => {
-                this.accounts.push(account);
-            });
-
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Account Created',
-                life: 3000
-            });
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Account Created',
+                    life: 3000
+                });
+            }
+            this.accountDialog = false;
+            this.account = {};
         }
-        this.accountDialog = false;
-        this.account = {};
-
-
     }
 
     findIndexById(id: number | undefined): number {

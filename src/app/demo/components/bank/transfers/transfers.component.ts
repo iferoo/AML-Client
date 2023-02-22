@@ -52,12 +52,10 @@ export class TransfersComponent implements OnInit {
 
     ngOnInit() {
         this.transferService.fetchTransfers().subscribe(transfers => {
-            console.log(transfers);
             this.transfers = transfers;
         });
 
         this.transactionService.fetchTransactions().subscribe(transactions => {
-            console.log(transactions);
             this.transactions = transactions;
         });
 
@@ -76,28 +74,35 @@ export class TransfersComponent implements OnInit {
         this.methods = [
             {
                 label: 'TELLER',
-                value: 'teller'
+                value: 'teller',
+                inactive: false
             }
             , {
                 label: 'ATM',
-                value: 'atm'
+                value: 'atm',
+                inactive: true
             }];
 
-        this.operations = [{label: 'DEPOSITE', value: 'deposite'}, {label: 'WITHDRAW', value: 'withdraw'}];
+        this.operations = [
+            {label: 'DEPOSITE', value: 'deposite', inactive: false},
+            {label: 'WITHDRAW', value: 'withdraw', inactive: true}];
 
         this.statuses = [
-            {label: 'approve', value: 'instock'},
-            {label: 'pending', value: 'lowstock'},
-            {label: 'decline', value: 'outofstock'}
+            {label: 'approve', value: 'instock', inactive: false},
+            {label: 'pending', value: 'lowstock', inactive: true},
+            {label: 'decline', value: 'outofstock', inactive: true}
         ];
 
         this.cols = [
             {field: 'id', header: 'Id'},
-            {field: 'name', header: 'Name'},
-            {field: 'salary', header: 'Salary'},
-            {field: 'email', header: 'Email'},
-            {field: 'bank.name', header: 'Bank'},
-            {field: 'branch.address', header: 'Branch'}
+            {field: 'transaction.method', header: 'Method'},
+            {field: 'transaction.operation', header: 'Operation'},
+            {field: 'transaction.amount', header: 'Amount'},
+            {field: 'transaction.account.id', header: 'Sender Id'},
+            {field: 'transaction.account.name', header: 'Sender Name'},
+            {field: 'reciever.id', header: 'Reciever Id'},
+            {field: 'reciever.name', header: 'Reciever Id'},
+            {field: 'status', header: 'Status'}
         ];
 
     }
@@ -106,8 +111,14 @@ export class TransfersComponent implements OnInit {
         this.transfer = {
             id: 0,
             reciever: {},
-            transaction: {},
-            status: ''
+            transaction: {
+                method: 'teller',
+                operation: 'deposite',
+                amount: 0,
+                date: new Date(),
+                account: {}
+            },
+            status: 'approve'
         };
         this.submitted = false;
         this.transferDialog = true;
@@ -151,38 +162,53 @@ export class TransfersComponent implements OnInit {
 
     saveTransfer() {
         this.submitted = true;
-
-        if (this.transfer.id) {
-            this.transferService.updateTransfer(this.transfer).subscribe((transfer: Transfer) => {
-                this.transfer = transfer;
-            });
-            this.transfers[this.findIndexById(this.transfer.id)] = this.transfer;
+        // @ts-ignore
+        if (this.transfer.transaction?.amount > this.transfer.transaction?.account?.balance) {
             this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Transfer Updated',
+                severity: 'error',
+                summary: 'Error',
+                detail: 'There Is No Enough Mony',
                 life: 3000
             });
         } else {
+            if (this.transfer.transaction!.method! &&
+                this.transfer.transaction!.amount! > 0 &&
+                this.transfer.transaction!.account!.id &&
+                this.transfer.reciever?.id) {
 
-            // let date = new Date(this.transfer.transaction.date).toISOString();
-            let transaction = {
-                ...this.transfer.transaction,
-                date: new Date(this.transfer.transaction.date).toISOString()
-            };
-            this.transactionService.addTransaction(transaction).subscribe((transaction: Transaction) => {
-                this.setTransaction(transaction);
-            });
+                if (this.transfer.id) {
+                    this.transferService.updateTransfer(this.transfer).subscribe((transfer: Transfer) => {
+                        this.transfers[this.findIndexById(transfer.id)] = transfer;
+                    });
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Transfer Updated',
+                        life: 3000
+                    });
+                } else {
+
+                    // let date = new Date(this.transfer.transaction.date).toISOString();
+                    let transaction: Transaction = {
+                        ...this.transfer.transaction,
+                        // @ts-ignore
+                        date: new Date(this.transfer.transaction!.date!).toISOString()
+                    };
+                    this.transactionService.addTransaction(transaction).subscribe((transaction: Transaction) => {
+                        this.setTransaction(transaction);
+                    });
 
 
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Transfer Created',
-                life: 3000
-            });
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Transfer Created',
+                        life: 3000
+                    });
+                }
+                this.transferDialog = false;
+            }
         }
-        this.transferDialog = false;
     }
 
     setTransaction(transaction: Transaction): void {

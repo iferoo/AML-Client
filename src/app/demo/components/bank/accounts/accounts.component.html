@@ -139,41 +139,53 @@
                     <label>Type</label>
                     <p-dropdown
                         [(ngModel)]="account.type"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.type}"
                         [options]="accountTypes"
                         inputId="accountType"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !account.type" class="ng-dirty ng-invalid">Type is required.</small>
                 </div>
 
                 <div class="field">
                     <label for="balance">Balance</label>
-                    <p-inputNumber [(ngModel)]="account.balance" currency="EGP" id="balance" locale="en-US"
-                                   mode="currency" [disabled]="isEdit">
+                    <p-inputNumber
+                        [(ngModel)]="account.balance"
+                        [disabled]="isEdit"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.balance}"
+                        currency="EGP"
+                        id="balance"
+                        locale="en-US" mode="currency">
                     </p-inputNumber>
+                    <small *ngIf="submitted && !account.balance" class="ng-dirty ng-invalid">Balance is required.</small>
                 </div>
 
                 <div class="field">
                     <label>Customer</label>
                     <p-dropdown
                         [(ngModel)]="account.customer"
+                        [disabled]="isEdit"
                         [options]="customers"
                         inputId="customer"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.customer?.id}"
                         optionLabel="name"
-                        [disabled]="isEdit"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !account.customer?.id" class="ng-dirty ng-invalid">Customer is required.</small>
                 </div>
 
                 <div class="field">
                     <label>Branch</label>
                     <p-dropdown
                         [(ngModel)]="account.branch"
+                        [disabled]="isEdit"
                         [options]="branches"
                         inputId="branch"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.branch?.id}"
                         optionLabel="address"
-                        [disabled]="isEdit"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !account.branch?.id" class="ng-dirty ng-invalid">Branch is required.</small>
                 </div>
 
                 <div class="field">
@@ -182,40 +194,12 @@
                         [(ngModel)]="account.employee"
                         [options]="employees"
                         inputId="employee"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.employee?.id}"
                         optionLabel="name"
                         placeholder="Select">
                     </p-dropdown>
+                    <small *ngIf="submitted && !account.employee?.id" class="ng-dirty ng-invalid">Employee is required.</small>
                 </div>
-
-<!--                <div class="field">-->
-<!--                    <label for="name">Customer Name</label>-->
-<!--                    <input [(ngModel)]="account.name" [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.name}"-->
-<!--                           autofocus id="name" pInputText required-->
-<!--                           type="text"/>-->
-<!--                    <small *ngIf="submitted && !account.name" class="ng-dirty ng-invalid">Name is required.</small>-->
-<!--                </div>-->
-
-                <!--                <div class="field">-->
-                <!--                    <label for="email">Email</label>-->
-                <!--                    <input [(ngModel)]="account.email"-->
-                <!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.email}"-->
-                <!--                           autofocus id="email"-->
-                <!--                           pInputText-->
-                <!--                           required-->
-                <!--                           type="email"/>-->
-                <!--                    <small *ngIf="submitted && !account.email" class="ng-dirty ng-invalid">Email is required.</small>-->
-                <!--                </div>-->
-                <!--                <div class="field">-->
-                <!--                    <label for="bank">Bank</label>-->
-                <!--                    <input [(ngModel)]="account.bank!.name!"-->
-                <!--                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.bank!.name}"-->
-                <!--                           autofocus disabled id="bank" pInputText-->
-                <!--                           required-->
-                <!--                           type="text"/>-->
-                <!--                    <small *ngIf="submitted && !account.bank!.name" class="ng-dirty ng-invalid">Bank is-->
-                <!--                        required.</small>-->
-                <!--                </div>-->
-
 
             </ng-template>
 
@@ -244,7 +228,7 @@
         <p-dialog [(visible)]="deleteAccountsDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected products?</span>
+                <span>Are you sure you want to delete selected accounts?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button (click)="deleteAccountsDialog = false" class="p-button-text" icon="pi pi-times" label="No"

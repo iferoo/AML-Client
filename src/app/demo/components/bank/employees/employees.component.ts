@@ -43,7 +43,6 @@ export class EmployeesComponent implements OnInit {
 
     ngOnInit() {
         this.employeeService.fetchEmployees().subscribe(employees => {
-            console.log(employees);
             this.employees = employees;
         });
         this.branchService.fetchBranches().subscribe(
@@ -119,32 +118,36 @@ export class EmployeesComponent implements OnInit {
     saveEmployee() {
         this.submitted = true;
 
+        // @ts-ignore
+        if (this.employee.name && this.employee.salary > 0 && this.employee.email && this.employee.branch?.address) {
+            if (this.employee.id) {
 
-        if (this.employee.id) {
-            this.employeeService.updateEmployee(this.employee).subscribe((employee: Employee) => {
-                this.employees[this.findIndexById(employee.id)] = employee;
-            });
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Employee Updated',
-                life: 3000
-            });
-        } else {
-            this.employeeService.addEmployee(this.employee).subscribe((employee: Employee) => {
-                this.employees.push(employee);
-            });
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Employee Created',
-                life: 3000
-            });
+                this.employeeService.updateEmployee(this.employee).subscribe((employee: Employee) => {
+                    this.employees[this.findIndexById(employee.id)] = employee;
+                });
+
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Employee Updated',
+                    life: 3000
+                });
+            } else {
+
+                this.employeeService.addEmployee(this.employee).subscribe((employee: Employee) => {
+                    this.employees.push(employee);
+                });
+
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Employee Created',
+                    life: 3000
+                });
+            }
+            this.employeeDialog = false;
+            this.employee = {};
         }
-        this.employeeDialog = false;
-        this.employee = {};
-
-
     }
 
     findIndexById(id: number | undefined): number {
