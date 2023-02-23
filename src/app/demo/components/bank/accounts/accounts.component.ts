@@ -117,7 +117,6 @@ export class AccountsComponent implements OnInit {
 
     saveAccount() {
         this.submitted = true;
-        console.log(this.account);
         // @ts-ignore
         if (this.account.type && this.account.balance > 0 && this.account.customer?.id && this.account.branch?.id && this.account.employee?.id) {
             if (this.account.id) {
