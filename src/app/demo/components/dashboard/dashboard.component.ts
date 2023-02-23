@@ -32,6 +32,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     accounts: Account[] = [];
     employees: Employee[] = [];
     transfer: Transfer = {};
+    isLoading: boolean = true;
+    currentPercent?: number;
+    savingPercent?: number;
 
     constructor(
         private transferService: TransferService,
@@ -61,6 +64,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         });
 
         this.accountService.fetchAccounts().subscribe(accounts => {
+            this.currentPercent = Math.floor((accounts.filter(account => account.type === 'Current').length / accounts.length) * 100);
+            this.savingPercent = Math.floor((accounts.filter(account => account.type === 'Saving').length / accounts.length) * 100);
             this.accounts = accounts;
         });
 

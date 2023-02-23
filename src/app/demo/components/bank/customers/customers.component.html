@@ -1,5 +1,13 @@
 <div class="grid">
-    <div class="col-12">
+    <div *ngIf="!customers.length" class="col-12">
+        <div class="card px-6 py-6">
+            <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
+            <h5 class="mx-10">Manage Customers</h5>
+            <p-skeleton height="50vh" styleClass="mb-2"></p-skeleton>
+        </div>
+    </div>
+
+    <div class="col-12" *ngIf="customers.length">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
@@ -130,7 +138,8 @@
 
                 <div class="field">
                     <label for="email">Email</label>
-                    <input [(ngModel)]="customer.email" [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.email}"
+                    <input [(ngModel)]="customer.email"
+                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.email}"
                            autofocus id="email" pInputText required
                            type="text"/>
                     <small *ngIf="submitted && !customer.email" class="ng-dirty ng-invalid">Email is required.</small>
@@ -138,10 +147,12 @@
 
                 <div class="field">
                     <label for="address">Address</label>
-                    <input [(ngModel)]="customer.address" [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.address}"
+                    <input [(ngModel)]="customer.address"
+                           [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.address}"
                            autofocus id="address" pInputText required
                            type="text"/>
-                    <small *ngIf="submitted && !customer.address" class="ng-dirty ng-invalid">Address is required.</small>
+                    <small *ngIf="submitted && !customer.address" class="ng-dirty ng-invalid">Address is
+                        required.</small>
                 </div>
             </ng-template>
 

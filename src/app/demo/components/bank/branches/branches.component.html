@@ -1,5 +1,13 @@
 <div class="grid">
-    <div class="col-12">
+    <div *ngIf="!branches.length" class="col-12">
+        <div class="card px-6 py-6">
+            <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
+            <h5 class="mx-10">Manage Branches</h5>
+            <p-skeleton height="50vh" styleClass="mb-2"></p-skeleton>
+        </div>
+    </div>
+
+    <div *ngIf="branches.length" class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
@@ -143,11 +151,11 @@
                     <label>City</label>
                     <p-dropdown
                         [(ngModel)]="branch.city"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !branch.city}"
                         [options]="statuses"
                         inputId="city"
                         optionValue="label"
                         placeholder="Select"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !branch.city}"
                     >
                     </p-dropdown>
                     <small *ngIf="submitted && !branch.city" class="ng-dirty ng-invalid">City is required.</small>

@@ -1,5 +1,13 @@
 <div class="grid">
-    <div class="col-12">
+    <div *ngIf="!accounts.length" class="col-12">
+        <div class="card px-6 py-6">
+            <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
+            <h5 class="mx-10">Manage Accounts</h5>
+            <p-skeleton height="50vh" styleClass="mb-2"></p-skeleton>
+        </div>
+    </div>
+
+    <div *ngIf="accounts.length" class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
@@ -157,7 +165,8 @@
                         id="balance"
                         locale="en-US" mode="currency">
                     </p-inputNumber>
-                    <small *ngIf="submitted && !account.balance" class="ng-dirty ng-invalid">Balance is required.</small>
+                    <small *ngIf="submitted && !account.balance" class="ng-dirty ng-invalid">Balance is
+                        required.</small>
                 </div>
 
                 <div class="field">
@@ -165,13 +174,14 @@
                     <p-dropdown
                         [(ngModel)]="account.customer"
                         [disabled]="isEdit"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.customer?.id}"
                         [options]="customers"
                         inputId="customer"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.customer?.id}"
                         optionLabel="name"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !account.customer?.id" class="ng-dirty ng-invalid">Customer is required.</small>
+                    <small *ngIf="submitted && !account.customer?.id" class="ng-dirty ng-invalid">Customer is
+                        required.</small>
                 </div>
 
                 <div class="field">
@@ -179,26 +189,28 @@
                     <p-dropdown
                         [(ngModel)]="account.branch"
                         [disabled]="isEdit"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.branch?.id}"
                         [options]="branches"
                         inputId="branch"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.branch?.id}"
                         optionLabel="address"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !account.branch?.id" class="ng-dirty ng-invalid">Branch is required.</small>
+                    <small *ngIf="submitted && !account.branch?.id" class="ng-dirty ng-invalid">Branch is
+                        required.</small>
                 </div>
 
                 <div class="field">
                     <label>Employee</label>
                     <p-dropdown
                         [(ngModel)]="account.employee"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.employee?.id}"
                         [options]="employees"
                         inputId="employee"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.employee?.id}"
                         optionLabel="name"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !account.employee?.id" class="ng-dirty ng-invalid">Employee is required.</small>
+                    <small *ngIf="submitted && !account.employee?.id" class="ng-dirty ng-invalid">Employee is
+                        required.</small>
                 </div>
 
             </ng-template>

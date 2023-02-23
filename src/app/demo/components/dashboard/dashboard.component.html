@@ -1,6 +1,6 @@
 <div class="grid">
     <div class="col-12 lg:col-6 xl:col-3">
-        <div class="card mb-0">
+        <div *ngIf="transfers.length" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Transfers</span>
@@ -14,9 +14,17 @@
             <span class="text-green-500 font-medium">100% </span>
             <span class="text-500">success</span>
         </div>
+        <ng-template [ngIf]="!transfers.length">
+            <div class="card mb-0">
+                <span class="block font-medium mb-3">Transfers</span>
+                <div class="surface-border">
+                    <p-skeleton height="3.5rem" width="100%"></p-skeleton>
+                </div>
+            </div>
+        </ng-template>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
-        <div class="card mb-0">
+        <div *ngIf="branches.length" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Branches</span>
@@ -30,9 +38,18 @@
             <span class="text-green-500 font-medium">%52+ </span>
             <span class="text-500">since last week</span>
         </div>
+
+        <ng-template [ngIf]="!branches.length">
+            <div class="card mb-0">
+                <span class="block font-medium mb-3">Branches</span>
+                <div class="surface-border">
+                    <p-skeleton height="3.5rem" width="100%"></p-skeleton>
+                </div>
+            </div>
+        </ng-template>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
-        <div class="card mb-0">
+        <div *ngIf="accounts.length" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Accounts</span>
@@ -46,9 +63,17 @@
             <span class="text-green-500 font-medium">20  </span>
             <span class="text-500">newly registered</span>
         </div>
+        <ng-template [ngIf]="!accounts.length">
+            <div class="card mb-0">
+                <span class="block font-medium mb-3">Accounts</span>
+                <div class="surface-border">
+                    <p-skeleton height="3.5rem" width="100%"></p-skeleton>
+                </div>
+            </div>
+        </ng-template>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
-        <div class="card mb-0">
+        <div *ngIf="employees.length" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Employee</span>
@@ -62,12 +87,21 @@
             <span class="text-green-500 font-medium">3 </span>
             <span class="text-500">will hire</span>
         </div>
+        <ng-template [ngIf]="!employees.length">
+            <div class="card mb-0">
+                <span class="block font-medium mb-3">Employees</span>
+                <div class="surface-border">
+                    <p-skeleton height="3.5rem" width="100%"></p-skeleton>
+                </div>
+            </div>
+        </ng-template>
     </div>
 
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Recent Transfer</h5>
-            <p-table [paginator]="true" [rows]="5" [value]="transfers" responsiveLayout="scroll">
+            <p-table *ngIf="transfers.length" [paginator]="true" [rows]="5" [value]="transfers"
+                     responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="sender">Sender
@@ -94,9 +128,14 @@
                     </tr>
                 </ng-template>
             </p-table>
+
+            <ng-template [ngIf]="!transfers.length">
+                <p-skeleton height="20rem" width="100%"></p-skeleton>
+            </ng-template>
         </div>
 
         <div class="card">
+
             <div class="flex justify-content-between align-items-center mb-5">
                 <h5>Account Types</h5>
                 <div>
@@ -107,7 +146,7 @@
                     <p-menu #menu [model]="items" [popup]="true"></p-menu>
                 </div>
             </div>
-            <ul class="list-none p-0 m-0">
+            <ul *ngIf="transfers.length" class="list-none p-0 m-0">
                 <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                     <div>
                         <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Saving</span>
@@ -115,9 +154,9 @@
                     <div class="mt-2 md:mt-0 flex align-items-center">
                         <div [ngStyle]="{height: '8px'}"
                              class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem">
-                            <div [ngStyle]="{width: '50%'}" class="bg-orange-500 h-full"></div>
+                            <div [ngStyle]="{'width.%': savingPercent}" class="bg-orange-500 h-full"></div>
                         </div>
-                        <span class="text-orange-500 ml-3 font-medium">%50</span>
+                        <span class="text-orange-500 ml-3 font-medium">%{{savingPercent}}</span>
                     </div>
                 </li>
                 <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
@@ -127,19 +166,26 @@
                     <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                         <div [ngStyle]="{height: '8px'}"
                              class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem">
-                            <div [ngStyle]="{width: '50%'}" class="bg-cyan-500 h-full"></div>
+                            <div [ngStyle]="{'width.%': currentPercent}" class="bg-cyan-500 h-full"></div>
                         </div>
-                        <span class="text-cyan-500 ml-3 font-medium">%50</span>
+                        <span class="text-cyan-500 ml-3 font-medium">%{{currentPercent}}</span>
                     </div>
                 </li>
             </ul>
+            <ng-template [ngIf]="!transfers.length">
+                <p-skeleton height="20rem" width="100%"></p-skeleton>
+            </ng-template>
         </div>
     </div>
 
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Transfer Overview</h5>
-            <p-chart [data]="chartData" [options]="chartOptions" type="line"></p-chart>
+            <p-chart [data]="chartData" [options]="chartOptions" type="line" *ngIf="transfers.length"></p-chart>
+
+            <ng-template [ngIf]="!transfers.length">
+                <p-skeleton height="20rem" width="100%"></p-skeleton>
+            </ng-template>
         </div>
 
         <div class="card">
@@ -154,22 +200,29 @@
                 </div>
             </div>
 
-            <div *ngFor="let transfer of transfers.slice().reverse()">
+            <div *ngIf="transfers.length">
+                <div *ngFor="let transfer of transfers.slice().reverse()">
                 <span
-                      class="block text-600 font-medium mb-3">{{transfer.transaction?.date | date}}</span>
-                <ul class="p-0 mx-0 mt-0 mb-4 list-none">
-                    <li class="flex align-items-center py-2 border-bottom-1 surface-border">
-                        <div
-                            class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
-                            <i class="pi pi-dollar text-xl text-blue-500"></i>
-                        </div>
-                        <span class="text-900 line-height-3">{{transfer.transaction?.account?.customer?.name}} has sent
+                    class="block text-600 font-medium mb-3">{{transfer.transaction?.date | date}}</span>
+                    <ul class="p-0 mx-0 mt-0 mb-4 list-none">
+                        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+                            <div
+                                class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                                <i class="pi pi-dollar text-xl text-blue-500"></i>
+                            </div>
+                            <span class="text-900 line-height-3">{{transfer.transaction?.account?.customer?.name}} has sent
                         <span class="text-blue-500">{{transfer.transaction?.amount}} EGP<span
                             class="text-900"> to {{transfer.reciever?.customer?.name}}</span></span>
                 </span>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
+            <ng-template [ngIf]="!transfers.length">
+                <p-skeleton height="8rem" width="100%"></p-skeleton>
+            </ng-template>
+
         </div>
 
     </div>
