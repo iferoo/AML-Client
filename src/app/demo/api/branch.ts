@@ -5,4 +5,7 @@ export interface Branch {
     address?: string;
     city?: string;
     bank?: Bank;
+    createdAt?: string;
+    isDeleted?: boolean;
+    deletedAt?: string;
 }

@@ -1,5 +1,5 @@
 <div class="grid">
-    <div *ngIf="!accounts.length" class="col-12">
+    <div *ngIf="false" class="col-12">
         <div class="card px-6 py-6">
             <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
             <h5 class="mx-10">Manage Accounts</h5>
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div *ngIf="accounts.length" class="col-12">
+    <div *ngIf="true" class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
@@ -88,6 +88,12 @@
                         <th pSortableColumn="employee.name">Employee
                             <p-sortIcon field="employee"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="createdAt">Created At
+                            <p-sortIcon field="createdAt"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="deletedAt">Deleted At
+                            <p-sortIcon field="deletedAt"></p-sortIcon>
+                        </th>
                         <th>Actions</th>
                     </tr>
                 </ng-template>
@@ -119,9 +125,16 @@
                             <span class="p-column-title">Employee</span>
                             {{account.employee!.name!}}
                         </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Created At</span>
+                            {{account.createdAt | date}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Deleted At</span>
+                            {{account.deletedAt | date}}
+                        </td>
                         <td>
-
-                            <div class="flex">
+                            <div class="flex" *ngIf="!account.isDeleted">
                                 <button (click)="editAccount(account)" class="p-button-rounded p-button-success mr-2"
                                         icon="pi pi-pencil"
                                         pButton
@@ -178,6 +191,7 @@
                         [options]="customers"
                         inputId="customer"
                         optionLabel="name"
+                        optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
                     <small *ngIf="submitted && !account.customer?.id" class="ng-dirty ng-invalid">Customer is
@@ -193,6 +207,7 @@
                         [options]="branches"
                         inputId="branch"
                         optionLabel="address"
+                        optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
                     <small *ngIf="submitted && !account.branch?.id" class="ng-dirty ng-invalid">Branch is
@@ -207,6 +222,7 @@
                         [options]="employees"
                         inputId="employee"
                         optionLabel="name"
+                        optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
                     <small *ngIf="submitted && !account.employee?.id" class="ng-dirty ng-invalid">Employee is

@@ -40,7 +40,11 @@ export class BranchesComponent implements OnInit {
     }
 
     openNew() {
-        this.branch = {};
+        this.branch = {
+            // @ts-ignore
+            createdAt: new Date().toISOString(),
+            isDeleted: false
+        };
         this.submitted = false;
         this.branchDialog = true;
     }
@@ -61,16 +65,20 @@ export class BranchesComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteBranchesDialog = false;
-        this.branchService.deleteSelectedBranches(this.selectedBranches);
-        this.branches = this.branches.filter(branches => !this.selectedBranches.includes(branches));
+        for (let branch of this.selectedBranches) {
+            this.branchService.deleteBranch(branch).subscribe((branch: Branch) => {
+                this.branches[branch.id! - 1] = branch;
+            });
+        }
+        // this.branches = this.branches.filter(branches => !this.selectedBranches.includes(branches));
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Branches Deleted', life: 3000});
         this.selectedBranches = [];
     }
 
     confirmDelete() {
         this.deleteBranchDialog = false;
-        this.branchService.deleteBranch(this.branch).subscribe((theBranch: Branch) => {
-            this.branches = this.branches.filter(branch => branch.id !== theBranch.id);
+        this.branchService.deleteBranch(this.branch).subscribe((branch: Branch) => {
+            this.branches[branch.id! - 1] = branch;
         });
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
         this.branch = {};

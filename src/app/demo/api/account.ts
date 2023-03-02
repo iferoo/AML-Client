@@ -9,4 +9,7 @@ export interface Account {
     customer?: BankCustomer;
     employee?: Employee;
     branch?: Branch;
+    createdAt?: string;
+    isDeleted?: boolean;
+    deletedAt?: string;
 }

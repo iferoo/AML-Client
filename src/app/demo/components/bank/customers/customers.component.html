@@ -1,5 +1,5 @@
 <div class="grid">
-    <div *ngIf="!customers.length" class="col-12">
+    <div *ngIf="false" class="col-12">
         <div class="card px-6 py-6">
             <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
             <h5 class="mx-10">Manage Customers</h5>
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="col-12" *ngIf="customers.length">
+    <div class="col-12" *ngIf="true">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
@@ -82,6 +82,12 @@
                         <th pSortableColumn="email">Email
                             <p-sortIcon field="email"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="createdAt">Created At
+                            <p-sortIcon field="createdAt"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="deletedAt">Deleted At
+                            <p-sortIcon field="deletedAt"></p-sortIcon>
+                        </th>
                         <th>Actions</th>
                     </tr>
                 </ng-template>
@@ -105,9 +111,16 @@
                             <span class="p-column-title">Email</span>
                             {{customer.email}}
                         </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Created At</span>
+                            {{customer.createdAt | date}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Deleted At</span>
+                            {{customer.deletedAt | date}}
+                        </td>
                         <td>
-
-                            <div class="flex">
+                            <div class="flex" *ngIf="!customer.isDeleted">
                                 <button (click)="editCustomer(customer)" class="p-button-rounded p-button-success mr-2"
                                         icon="pi pi-pencil"
                                         pButton

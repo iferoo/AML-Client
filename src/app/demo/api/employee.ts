@@ -8,4 +8,7 @@ export interface Employee {
     email?: string;
     bank?: Bank;
     branch?: Branch;
+    createdAt?: string;
+    isDeleted?: boolean;
+    deletedAt?: string;
 }

@@ -1,6 +1,6 @@
 <div class="grid">
     <div class="col-12 lg:col-6 xl:col-3">
-        <div *ngIf="transfers.length" class="card mb-0">
+        <div *ngIf="true" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Transfers</span>
@@ -14,7 +14,7 @@
             <span class="text-green-500 font-medium">100% </span>
             <span class="text-500">success</span>
         </div>
-        <ng-template [ngIf]="!transfers.length">
+        <ng-template [ngIf]="false">
             <div class="card mb-0">
                 <span class="block font-medium mb-3">Transfers</span>
                 <div class="surface-border">
@@ -24,7 +24,7 @@
         </ng-template>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
-        <div *ngIf="branches.length" class="card mb-0">
+        <div *ngIf="true" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Branches</span>
@@ -39,7 +39,7 @@
             <span class="text-500">since last week</span>
         </div>
 
-        <ng-template [ngIf]="!branches.length">
+        <ng-template [ngIf]="false">
             <div class="card mb-0">
                 <span class="block font-medium mb-3">Branches</span>
                 <div class="surface-border">
@@ -49,7 +49,7 @@
         </ng-template>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
-        <div *ngIf="accounts.length" class="card mb-0">
+        <div *ngIf="true" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Accounts</span>
@@ -63,7 +63,7 @@
             <span class="text-green-500 font-medium">20  </span>
             <span class="text-500">newly registered</span>
         </div>
-        <ng-template [ngIf]="!accounts.length">
+        <ng-template [ngIf]="false">
             <div class="card mb-0">
                 <span class="block font-medium mb-3">Accounts</span>
                 <div class="surface-border">
@@ -73,7 +73,7 @@
         </ng-template>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
-        <div *ngIf="employees.length" class="card mb-0">
+        <div *ngIf="true" class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Employee</span>
@@ -87,7 +87,7 @@
             <span class="text-green-500 font-medium">3 </span>
             <span class="text-500">will hire</span>
         </div>
-        <ng-template [ngIf]="!employees.length">
+        <ng-template [ngIf]="false">
             <div class="card mb-0">
                 <span class="block font-medium mb-3">Employees</span>
                 <div class="surface-border">
@@ -100,7 +100,7 @@
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Recent Transfer</h5>
-            <p-table *ngIf="transfers.length" [paginator]="true" [rows]="5" [value]="transfers"
+            <p-table *ngIf="true" [paginator]="true" [rows]="5" [value]="transfers"
                      responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                     <tr>
@@ -129,7 +129,7 @@
                 </ng-template>
             </p-table>
 
-            <ng-template [ngIf]="!transfers.length">
+            <ng-template [ngIf]="false">
                 <p-skeleton height="20rem" width="100%"></p-skeleton>
             </ng-template>
         </div>
@@ -146,7 +146,7 @@
                     <p-menu #menu [model]="items" [popup]="true"></p-menu>
                 </div>
             </div>
-            <ul *ngIf="transfers.length" class="list-none p-0 m-0">
+            <ul *ngIf="true" class="list-none p-0 m-0">
                 <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                     <div>
                         <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Saving</span>
@@ -172,7 +172,7 @@
                     </div>
                 </li>
             </ul>
-            <ng-template [ngIf]="!transfers.length">
+            <ng-template [ngIf]="false">
                 <p-skeleton height="20rem" width="100%"></p-skeleton>
             </ng-template>
         </div>
@@ -181,9 +181,9 @@
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Transfer Overview</h5>
-            <p-chart [data]="chartData" [options]="chartOptions" type="line" *ngIf="transfers.length"></p-chart>
+            <p-chart [data]="chartData" [options]="chartOptions" type="line" *ngIf="true"></p-chart>
 
-            <ng-template [ngIf]="!transfers.length">
+            <ng-template [ngIf]="false">
                 <p-skeleton height="20rem" width="100%"></p-skeleton>
             </ng-template>
         </div>
@@ -200,7 +200,7 @@
                 </div>
             </div>
 
-            <div *ngIf="transfers.length">
+            <div *ngIf="true">
                 <div *ngFor="let transfer of transfers.slice().reverse()">
                 <span
                     class="block text-600 font-medium mb-3">{{transfer.transaction?.date | date}}</span>
@@ -219,7 +219,7 @@
                 </div>
             </div>
 
-            <ng-template [ngIf]="!transfers.length">
+            <ng-template [ngIf]="false">
                 <p-skeleton height="8rem" width="100%"></p-skeleton>
             </ng-template>
 

@@ -73,7 +73,10 @@ export class EmployeesComponent implements OnInit {
                     id: 1,
                     name: 'CIB'
                 },
-            }
+            },
+            isDeleted: false,
+            createdAt: new Date().toISOString()
+
         };
         this.submitted = false;
         this.employeeDialog = true;
@@ -95,8 +98,11 @@ export class EmployeesComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteEmployeesDialog = false;
-        this.employeeService.deleteSelectedEmployees(this.selectedEmployees);
-        this.employees = this.employees.filter(employee => !this.selectedEmployees.includes(employee));
+        for (let employee of this.selectedEmployees) {
+            this.employeeService.deleteEmployee(employee).subscribe((employee: Employee) => {
+                this.employees[employee.id! - 1] = employee;
+            });
+        }
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Employees Deleted', life: 3000});
         this.selectedEmployees = [];
     }
@@ -104,8 +110,8 @@ export class EmployeesComponent implements OnInit {
     confirmDelete() {
         this.deleteEmployeeDialog = false;
         this.employeeService.deleteEmployee(this.employee).subscribe((employee: Employee) => {
+            this.employees[employee.id! - 1] = employee;
         });
-        this.employees = this.employees.filter(employee => employee.id !== this.employee.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000});
         this.employee = {};
     }

@@ -72,7 +72,9 @@ export class AccountsComponent implements OnInit {
     openNew() {
         this.account = {
             id: 0,
-            balance: 0
+            balance: 0,
+            isDeleted: false,
+            createdAt: new Date().toISOString(),
         };
         this.isEdit = false;
         this.submitted = false;
@@ -95,8 +97,13 @@ export class AccountsComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteAccountsDialog = false;
-        this.accountService.deleteSelectedAccounts(this.selectedAccounts);
-        this.accounts = this.accounts.filter(account => !this.selectedAccounts.includes(account));
+        for (let account of this.selectedAccounts) {
+            this.accountService.deleteAccount(account).subscribe((account: Account) => {
+                this.accounts[account.id! - 1] = account;
+            });
+        }
+        // this.accountService.deleteSelectedAccounts(this.selectedAccounts);
+        // this.accounts = this.accounts.filter(account => !this.selectedAccounts.includes(account));
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Accounts Deleted', life: 3000});
         this.selectedAccounts = [];
     }
@@ -104,8 +111,8 @@ export class AccountsComponent implements OnInit {
     confirmDelete() {
         this.deleteAccountDialog = false;
         this.accountService.deleteAccount(this.account).subscribe((account: Account) => {
+            this.accounts[account.id! - 1] = account;
         });
-        this.accounts = this.accounts.filter(account => account.id !== this.account.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Account Deleted', life: 3000});
         this.account = {};
     }

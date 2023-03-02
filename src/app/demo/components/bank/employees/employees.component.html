@@ -1,5 +1,5 @@
 <div class="grid">
-    <div *ngIf="!employees.length" class="col-12">
+    <div *ngIf="false" class="col-12">
         <div class="card px-6 py-6">
             <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
             <h5 class="mx-10">Manage Employees</h5>
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="col-12" *ngIf="employees.length">
+    <div class="col-12" *ngIf="true">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
@@ -88,6 +88,12 @@
                         <th pSortableColumn="branch.address">Branch
                             <p-sortIcon field="branch"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="createdAt">Created At
+                            <p-sortIcon field="createdAt"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="deletedAt">Deleted At
+                            <p-sortIcon field="deletedAt"></p-sortIcon>
+                        </th>
                         <th>Actions</th>
                     </tr>
                 </ng-template>
@@ -119,9 +125,16 @@
                             <span class="p-column-title">Branch</span>
                             {{employee.branch.address}}
                         </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Created At</span>
+                            {{employee.createdAt | date}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Deleted At</span>
+                            {{employee.deletedAt | date}}
+                        </td>
                         <td>
-
-                            <div class="flex">
+                            <div class="flex" *ngIf="!employee.isDeleted">
                                 <button (click)="editEmployee(employee)" class="p-button-rounded p-button-success mr-2"
                                         icon="pi pi-pencil"
                                         pButton
@@ -197,6 +210,7 @@
                         inputId="branch"
                         optionLabel="address"
                         placeholder="Select"
+                        optionDisabled="isDeleted"
                         [ngClass]="{'ng-invalid ng-dirty' : submitted && !employee.branch?.address}">
                     </p-dropdown>
                 </div>

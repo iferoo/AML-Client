@@ -31,6 +31,7 @@ export class BanksComponent implements OnInit {
     ngOnInit() {
 
         this.bankService.fetchBanks().subscribe(banks => {
+            console.log(banks);
             this.banks = banks;
         });
 
@@ -42,7 +43,10 @@ export class BanksComponent implements OnInit {
     }
 
     openNew() {
-        this.bank = {};
+        this.bank = {
+            // @ts-ignore
+            createdAt: new Date().toISOString(),
+        };
         this.submitted = false;
         this.bankDialog = true;
     }
@@ -63,8 +67,11 @@ export class BanksComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteBanksDialog = false;
-        this.bankService.deleteSelectedBanks(this.selectedBanks);
-        this.banks = this.banks.filter(bank => !this.selectedBanks.includes(bank));
+        for(let bank of this.selectedBanks) {
+            this.bankService.deleteBank(bank).subscribe((bank: Bank) => {
+                this.banks[bank.id! - 1] = bank;
+            });
+        }
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Banks Deleted', life: 3000});
         this.selectedBanks = [];
     }
@@ -72,8 +79,8 @@ export class BanksComponent implements OnInit {
     confirmDelete() {
         this.deleteBankDialog = false;
         this.bankService.deleteBank(this.bank).subscribe((bank: Bank) => {
+            this.banks[bank.id! - 1] = bank;
         });
-        this.banks = this.banks.filter(bank => bank.id !== this.bank.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Bank Deleted', life: 3000});
         this.bank = {};
     }

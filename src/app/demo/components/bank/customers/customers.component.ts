@@ -41,6 +41,7 @@ export class CustomersComponent implements OnInit {
 
     ngOnInit() {
         this.customerService.fetchCustomers().subscribe(customers => {
+            console.log(customers);
             this.customers = customers;
         });
 
@@ -61,7 +62,8 @@ export class CustomersComponent implements OnInit {
 
     openNew() {
         this.customer = {
-            id: 0
+            createdAt: new Date().toISOString(),
+            isDeleted: false
         };
         this.submitted = false;
         this.customerDialog = true;
@@ -83,8 +85,13 @@ export class CustomersComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteCustomersDialog = false;
-        this.customerService.deleteSelectedCustomers(this.selectedCustomers);
-        this.customers = this.customers.filter(customer => !this.selectedCustomers.includes(customer));
+        for (let customer of this.customers) {
+            this.customerService.deleteCustomer(this.customer).subscribe((customer: Customer) => {
+                this.customers[customer.id! - 1] = customer;
+            });
+        }
+        // this.customerService.deleteSelectedCustomers(this.selectedCustomers);
+        // this.customers = this.customers.filter(customer => !this.selectedCustomers.includes(customer));
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Customers Deleted', life: 3000});
         this.selectedCustomers = [];
     }
@@ -92,8 +99,9 @@ export class CustomersComponent implements OnInit {
     confirmDelete() {
         this.deleteCustomerDialog = false;
         this.customerService.deleteCustomer(this.customer).subscribe((customer: Customer) => {
+            this.customers[customer.id! - 1] = customer;
         });
-        this.customers = this.customers.filter(customer => customer.id !== this.customer.id);
+        // this.customers = this.customers.filter(customer => customer.id !== this.customer.id);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Customer Deleted', life: 3000});
         this.customer = {};
     }

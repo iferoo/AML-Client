@@ -1,12 +1,12 @@
 <div class="grid">
-    <div *ngIf="!transfers.length" class="col-12">
+    <div *ngIf="false" class="col-12">
         <div class="card px-6 py-6">
             <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
             <h5 class="mx-10">Manage Transfers</h5>
             <p-skeleton height="50vh" styleClass="mb-2"></p-skeleton>
         </div>
     </div>
-    <div class="col-12" *ngIf="transfers.length">
+    <div *ngIf="true" class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
@@ -42,7 +42,7 @@
                 #dt
                 [(selection)]="selectedTransfers"
                 [columns]="cols"
-                [globalFilterFields]="['id','transaction.method','transaction.operation','branch.address']"
+                [globalFilterFields]="['id','transaction.method','transaction.operation','transaction.account.id','branch.address']"
                 [paginator]="true"
                 [rowHover]="true"
                 [rowsPerPageOptions]="[10,20,30]"
@@ -193,7 +193,8 @@
                         optionValue="value"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !transfer.transaction!.operation" class="ng-dirty ng-invalid">Operation is
+                    <small *ngIf="submitted && !transfer.transaction!.operation" class="ng-dirty ng-invalid">Operation
+                        is
                         required.</small>
                 </div>
 
@@ -230,6 +231,7 @@
                         [options]="accounts"
                         inputId="operation"
                         optionLabel="id"
+                        optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
                     <small *ngIf="submitted && !transfer.transaction!.account!.id" class="ng-dirty ng-invalid">Sender is
@@ -243,6 +245,7 @@
                         [options]="accounts"
                         inputId="operation"
                         optionLabel="id"
+                        optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
                     <small *ngIf="submitted && !transfer.reciever?.id" class="ng-dirty ng-invalid">Reciever is

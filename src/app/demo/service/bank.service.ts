@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Branch} from '../api/branch';
 import {catchError, map, throwError} from 'rxjs';
 import {Bank} from '../api/bank';
-import {Employee} from '../api/employee';
 
 @Injectable()
 export class BankService {
@@ -27,6 +25,7 @@ export class BankService {
                 })
             );
     }
+
     addBank(bank: Bank): any {
         return this.http.post<Bank>(
             'http://localhost:8080/api/banks',
