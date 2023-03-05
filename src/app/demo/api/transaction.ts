@@ -5,6 +5,7 @@ export interface Transaction {
     method?: string;
     operation?: string;
     amount?: number;
-    date?: Date;
+    createdDate?: string | null;
+    createdTime?: string | null;
     account?: Account;
 }

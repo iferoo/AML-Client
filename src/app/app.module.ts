@@ -18,6 +18,7 @@ import {BankCustomerService} from './demo/service/bankCustomer.service';
 import {AccountService} from './demo/service/account.service';
 import {TransferService} from './demo/service/transfer.service';
 import {TransactionService} from './demo/service/transaction.service';
+import {AlertService} from './demo/service/alert.service';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import {TransactionService} from './demo/service/transaction.service';
         BankCustomerService,
         AccountService,
         TransferService,
-        TransactionService
+        TransactionService,
+        AlertService
     ],
     bootstrap: [AppComponent]
 })

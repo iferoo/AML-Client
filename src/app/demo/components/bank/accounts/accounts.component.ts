@@ -72,6 +72,7 @@ export class AccountsComponent implements OnInit {
     openNew() {
         this.account = {
             id: 0,
+            branch: {},
             balance: 0,
             isDeleted: false,
             createdAt: new Date().toISOString(),
@@ -168,6 +169,16 @@ export class AccountsComponent implements OnInit {
         }
 
         return index;
+    }
+
+    filterEmployees(branch: Branch) {
+        // @ts-ignore
+        let filteredEmployees = this.employees.filter((employee: Employee) => {
+            if (employee.branch?.id === branch.id) {
+                return employee;
+            }
+        });
+        return filteredEmployees;
     }
 
     onGlobalFilter(table: Table, event: Event) {

@@ -21,32 +21,36 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'System',
+                label: 'Bank',
                 items: [
                     {
                         label: 'Customers',
                         icon: 'pi pi-fw pi-users',
                         routerLink: ['/banks/customers']
                     },
+                    // {label: 'Banks', icon: 'pi pi-fw  pi-money-bill', routerLink: ['banks']},
+                    {label: 'Branches', icon: 'pi pi-fw pi-home', routerLink: ['/banks/branches']},
+                    {label: 'Employees', icon: 'pi pi-fw pi-users', routerLink: ['/banks/employees']},
                     {
-                        label: 'Bank',
+                        label: 'Accounts',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/banks/accounts']
+                    },
+                    {
+                        label: 'Transfers',
                         icon: 'pi pi-fw pi-money-bill',
                         items: [
-                            // {label: 'Banks', icon: 'pi pi-fw  pi-money-bill', routerLink: ['banks']},
-                            {label: 'Branches', icon: 'pi pi-fw pi-home', routerLink: ['/banks/branches']},
-                            {label: 'Employees', icon: 'pi pi-fw pi-users', routerLink: ['/banks/employees']},
                             {
-                                label: 'Accounts',
-                                icon: 'pi pi-fw pi-user',
-                                routerLink: ['/banks/accounts']
-                            },
-
-                            {
-                                label: 'Transfers',
+                                label: 'Teller',
                                 icon: 'pi pi-fw pi-arrow-right-arrow-left',
                                 routerLink: ['/banks/transfers']
                             },
                         ]
+                    },
+                    {
+                        label: 'Alerts',
+                        icon: 'pi pi-fw pi-shield',
+                        routerLink: ['/banks/alerts']
                     },
                     // {
                     //     label: 'Customers Management',

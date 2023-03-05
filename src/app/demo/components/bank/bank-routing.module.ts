@@ -13,6 +13,7 @@ import {RouterModule} from '@angular/router';
         },
         {path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule)},
         {path: 'transfers', loadChildren: () => import('./transfers/transfers.module').then(m => m.TransfersModule)},
+        {path: 'alerts', loadChildren: () => import('./alerts/alerts.module').then(m => m.AlertsModule)},
         // {
         //     path: 'customers', children: []
         // },

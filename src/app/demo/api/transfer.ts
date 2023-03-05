@@ -4,6 +4,6 @@ import {Transaction} from './transaction';
 export interface Transfer {
     id?: number;
     status?: string;
-    reciever?: Account;
+    reciever?: Account | null;
     transaction?: Transaction;
 }

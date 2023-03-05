@@ -1,0 +1,100 @@
+<div class="grid">
+    <div *ngIf="false" class="col-12">
+        <div class="card px-6 py-6">
+            <p-skeleton height="10vh" styleClass="mb-2"></p-skeleton>
+            <h5 class="mx-10">Manage Transfers</h5>
+            <p-skeleton height="50vh" styleClass="mb-2"></p-skeleton>
+        </div>
+    </div>
+    <div *ngIf="true" class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button
+                            (click)="dt.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export"
+                            pButton
+                            pRipple>
+                        </button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table
+                #dt
+                [(selection)]="selectedAlerts"
+                [columns]="cols"
+                [globalFilterFields]="['id','account.id','transaction.operation','transaction.account.id','branch.address']"
+                [paginator]="true"
+                [rowHover]="true"
+                [rowsPerPageOptions]="[10,20,30]"
+                [rows]="10"
+                [rows]="10"
+                [showCurrentPageReport]="true"
+                [value]="alerts"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"
+                responsiveLayout="scroll" selectionMode="multiple">
+
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Alerts</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input (input)="onGlobalFilter(dt, $event)" class="w-full sm:w-auto" pInputText
+                                   placeholder="Search..."
+                                   type="text"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="id">Id
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="customer">Customer
+                            <p-sortIcon field="customer"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="customer">Transactions
+                            <p-sortIcon field="customer"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="risk">Risk
+                            <p-sortIcon field="risk"></p-sortIcon>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template let-alert pTemplate="body">
+                    <tr>
+                        <td style="width:14%; min-width:10rem;">
+                            <p-tableCheckbox [value]="alert"></p-tableCheckbox>
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
+                            {{alert.id}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Customer</span>
+                            {{alert.account.customer.name}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Transtion number</span>
+                            {{alert.transactions}}
+                        </td>
+
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+                            <span
+                                [class]="'product-badge status-' + (alert.risk === 'normal' ? 'instock' : alert.risk === 'medium' ? 'lowstock':'outofstock')"
+                            >{{alert.risk}}</span>
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

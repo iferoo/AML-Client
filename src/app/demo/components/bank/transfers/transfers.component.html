@@ -212,40 +212,44 @@
                         required.</small>
                 </div>
 
-                <div class="field">
-                    <label for="date">Date</label>
-                    <p-calendar
-                        [(ngModel)]="transfer.transaction!.date"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.date}"
-                        [showSeconds]="true"
-                        [showTime]="true" disabled id="date"></p-calendar>
-                    <small *ngIf="submitted && !transfer.transaction!.date" class="ng-dirty ng-invalid">Date is
-                        required.</small>
-                </div>
+                <!--                <div class="field">-->
+                <!--                    <label for="date">Date</label>-->
+                <!--                    <p-calendar-->
+                <!--                        [(ngModel)]="transfer.transaction!.date"-->
+                <!--                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.date}"-->
+                <!--                        [showSeconds]="true"-->
+                <!--                        [showTime]="true" disabled id="date"></p-calendar>-->
+                <!--                    <small *ngIf="submitted && !transfer.transaction!.date" class="ng-dirty ng-invalid">Date is-->
+                <!--                        required.</small>-->
+                <!--                </div>-->
 
                 <div class="field">
-                    <label>Sender</label>
+                    <label>{{transfer.transaction?.operation == 'transfer' ? 'Sender' : 'Account'}}</label>
                     <p-dropdown
                         [(ngModel)]="transfer.transaction!.account"
+                        [filter]="true"
                         [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.account!.id}"
                         [options]="accounts"
+
                         inputId="operation"
-                        optionLabel="id"
                         optionDisabled="isDeleted"
+                        optionLabel="id"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !transfer.transaction!.account!.id" class="ng-dirty ng-invalid">Sender is
-                        required.</small>
+                    <small *ngIf="submitted && !transfer.transaction!.account!.id"
+                           class="ng-dirty ng-invalid">{{transfer.transaction?.operation == 'transfer' ? 'Sender is required.' : 'Account is required.'}}</small>
                 </div>
-                <div class="field">
+
+                <div *ngIf="transfer.transaction!.operation == 'transfer'" class="field">
                     <label>Reciever</label>
                     <p-dropdown
                         [(ngModel)]="transfer.reciever"
+                        [filter]="true"
                         [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.reciever?.id}"
                         [options]="accounts"
                         inputId="operation"
-                        optionLabel="id"
                         optionDisabled="isDeleted"
+                        optionLabel="id"
                         placeholder="Select">
                     </p-dropdown>
                     <small *ngIf="submitted && !transfer.reciever?.id" class="ng-dirty ng-invalid">Reciever is

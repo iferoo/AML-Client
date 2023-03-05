@@ -26,7 +26,7 @@ export class TransactionService {
             );
     }
 
-    addTransaction(transaction: Transaction): any {
+    addTransaction(transaction: Transaction | any): any {
         return this.http.post<Transaction>(
             'http://localhost:8080/api/transactions',
             transaction)

@@ -219,7 +219,7 @@
                     <p-dropdown
                         [(ngModel)]="account.employee"
                         [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.employee?.id}"
-                        [options]="employees"
+                        [options]="filterEmployees(account.branch!)"
                         inputId="employee"
                         optionLabel="name"
                         optionDisabled="isDeleted"

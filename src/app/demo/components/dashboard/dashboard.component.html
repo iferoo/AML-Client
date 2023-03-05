@@ -116,7 +116,8 @@
                 </ng-template>
                 <ng-template let-transfer pTemplate="body">
                     <tr>
-                        <td style="width: 35%; min-width: 7rem;">{{transfer.transaction.account.customer.name}}</td>
+                        <td></td>
+<!--                        <td style="width: 35%; min-width: 7rem;">{{transfer.transaction.account.customer.name == null ? 'test' : transfer.transaction.account.customer.name}}</td>-->
                         <td style="width: 35%; min-width: 7rem;">{{transfer.reciever.customer.name}}</td>
                         <td style="width: 35%; min-width: 8rem;">{{transfer.transaction.amount | currency:'EGP'}}</td>
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
@@ -181,7 +182,7 @@
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Transfer Overview</h5>
-            <p-chart [data]="chartData" [options]="chartOptions" type="line" *ngIf="true"></p-chart>
+            <p-chart *ngIf="true" [data]="chartData" [options]="chartOptions" type="line"></p-chart>
 
             <ng-template [ngIf]="false">
                 <p-skeleton height="20rem" width="100%"></p-skeleton>
@@ -203,7 +204,7 @@
             <div *ngIf="true">
                 <div *ngFor="let transfer of transfers.slice().reverse()">
                 <span
-                    class="block text-600 font-medium mb-3">{{transfer.transaction?.date | date}}</span>
+                    class="block text-600 font-medium mb-3">{{transfer.transaction?.createdDate | date}}</span>
                     <ul class="p-0 mx-0 mt-0 mb-4 list-none">
                         <li class="flex align-items-center py-2 border-bottom-1 surface-border">
                             <div

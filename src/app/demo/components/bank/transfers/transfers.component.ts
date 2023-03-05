@@ -80,12 +80,13 @@ export class TransfersComponent implements OnInit {
             , {
                 label: 'ATM',
                 value: 'atm',
-                inactive: true
+                inactive: false
             }];
 
         this.operations = [
-            {label: 'DEPOSITE', value: 'deposite', inactive: false},
-            {label: 'WITHDRAW', value: 'withdraw', inactive: true}];
+            {label: 'TRANSFER', value: 'transfer', inactive: false},
+            {label: 'DEPOSIT', value: 'deposit', inactive: false},
+            {label: 'WITHDRAW', value: 'withdraw', inactive: false}];
 
         this.statuses = [
             {label: 'approve', value: 'instock', inactive: false},
@@ -113,9 +114,10 @@ export class TransfersComponent implements OnInit {
             reciever: {},
             transaction: {
                 method: 'teller',
-                operation: 'deposite',
+                operation: 'transfer',
                 amount: 0,
-                date: new Date(),
+                createdDate: null,
+                createdTime: null,
                 account: {}
             },
             status: 'approve'
@@ -162,64 +164,55 @@ export class TransfersComponent implements OnInit {
 
     saveTransfer() {
         this.submitted = true;
-        // @ts-ignore
-        if (this.transfer.transaction?.amount > this.transfer.transaction?.account?.balance) {
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'There Is No Enough Mony',
-                life: 3000
-            });
-        } else {
-            if (this.transfer.transaction!.method! &&
-                this.transfer.transaction!.amount! > 0 &&
-                this.transfer.transaction!.account!.id &&
-                this.transfer.reciever?.id) {
 
-                if (this.transfer.id) {
-                    this.transferService.updateTransfer(this.transfer).subscribe((transfer: Transfer) => {
-                        this.transfers[this.findIndexById(transfer.id)] = transfer;
-                    });
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Transfer Updated',
-                        life: 3000
-                    });
-                } else {
+        if (this.transfer.transaction?.amount! > 5000) {
 
-                    // let date = new Date(this.transfer.transaction.date).toISOString();
-                    let transaction: Transaction = {
-                        ...this.transfer.transaction,
-                        // @ts-ignore
-                        date: new Date(this.transfer.transaction!.date!).toISOString()
-                    };
-                    this.transactionService.addTransaction(transaction).subscribe((transaction: Transaction) => {
-                        this.setTransaction(transaction);
-                    });
+            //@ts-ignore
+            if (this.transfer.transaction?.amount > this.transfer.transaction?.account?.balance &&
+                this.transfer.transaction?.operation !== 'deposit') {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'There Is No Enough Mony',
+                    life: 3000
+                });
+            } else {
 
 
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Transfer Created',
-                        life: 3000
-                    });
-                }
+                let transaction = {
+                    ...this.transfer.transaction,
+                    createdDate: null,
+                    createdTime: null,
+                };
+
+                this.transactionService.addTransaction(transaction).subscribe((transaction: Transaction) => {
+                    this.addTransfer(transaction);
+                });
+
+
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Transfer Created',
+                    life: 3000
+                });
                 this.transferDialog = false;
             }
         }
     }
 
-    setTransaction(transaction: Transaction): void {
-
+    addTransfer(transaction: Transaction): void {
         this.transfer.transaction = transaction;
+
+        if (transaction.operation !== 'transfer') {
+            this.transfer.reciever = null;
+        }
+
         this.transferService.addTransfer(this.transfer).subscribe((transfer: Transfer) => {
             this.transfers.push(transfer);
         });
 
         this.transfer = {};
-
     }
 
     findIndexById(id: number | undefined): number {
