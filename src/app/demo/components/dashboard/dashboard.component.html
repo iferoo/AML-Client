@@ -116,8 +116,8 @@
                 </ng-template>
                 <ng-template let-transfer pTemplate="body">
                     <tr>
-                        <td></td>
-<!--                        <td style="width: 35%; min-width: 7rem;">{{transfer.transaction.account.customer.name == null ? 'test' : transfer.transaction.account.customer.name}}</td>-->
+<!--                        <td></td>-->
+                        <td style="width: 35%; min-width: 7rem;">{{transfer.transaction.account.customer.name == null ? 'test' : transfer.transaction.account.customer.name}}</td>
                         <td style="width: 35%; min-width: 7rem;">{{transfer.reciever.customer.name}}</td>
                         <td style="width: 35%; min-width: 8rem;">{{transfer.transaction.amount | currency:'EGP'}}</td>
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
