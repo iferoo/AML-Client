@@ -58,14 +58,14 @@ export class AccountService {
 
     deleteAccount(account: Account) {
         return this.http.delete(
-            `http://localhost:8080/api/accounts/${account.id}`,
+            `http://localhost:8080/api/accounts/${account.accountId}`,
         );
     }
 
     deleteSelectedAccounts(accounts: Account[]) {
         for (const account of accounts) {
             this.http.delete(
-                `http://localhost:8080/api/accounts/${account.id}`,
+                `http://localhost:8080/api/accounts/${account.accountId}`,
             ).subscribe();
         }
     }

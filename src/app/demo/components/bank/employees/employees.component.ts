@@ -52,7 +52,7 @@ export class EmployeesComponent implements OnInit {
         );
 
         this.cols = [
-            {field: 'id', header: 'Id'},
+            {field: 'employeeId', header: 'Id'},
             {field: 'name', header: 'Name'},
             {field: 'salary', header: 'Salary'},
             {field: 'email', header: 'Email'},
@@ -64,13 +64,13 @@ export class EmployeesComponent implements OnInit {
 
     openNew() {
         this.employee = {
-            id: 0,
+            employeeId: 0,
             name: '',
             email: '',
             salary: 0,
             branch: {
                 bank: {
-                    id: 1,
+                    bankId: 1,
                     name: 'CIB'
                 },
             },
@@ -100,7 +100,7 @@ export class EmployeesComponent implements OnInit {
         this.deleteEmployeesDialog = false;
         for (let employee of this.selectedEmployees) {
             this.employeeService.deleteEmployee(employee).subscribe((employee: Employee) => {
-                this.employees[employee.id! - 1] = employee;
+                this.employees[employee.employeeId! - 1] = employee;
             });
         }
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Employees Deleted', life: 3000});
@@ -110,7 +110,7 @@ export class EmployeesComponent implements OnInit {
     confirmDelete() {
         this.deleteEmployeeDialog = false;
         this.employeeService.deleteEmployee(this.employee).subscribe((employee: Employee) => {
-            this.employees[employee.id! - 1] = employee;
+            this.employees[employee.employeeId! - 1] = employee;
         });
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000});
         this.employee = {};
@@ -126,10 +126,10 @@ export class EmployeesComponent implements OnInit {
 
         // @ts-ignore
         if (this.employee.name && this.employee.salary > 0 && this.employee.email && this.employee.branch?.address) {
-            if (this.employee.id) {
+            if (this.employee.employeeId) {
 
                 this.employeeService.updateEmployee(this.employee).subscribe((employee: Employee) => {
-                    this.employees[this.findIndexById(employee.id)] = employee;
+                    this.employees[this.findIndexById(employee.employeeId)] = employee;
                 });
 
                 this.messageService.add({
@@ -160,7 +160,7 @@ export class EmployeesComponent implements OnInit {
         let index = -1;
         for (let i = 0; i < this.employees.length; i++) {
             // @ts-ignore
-            if (this.employees[i].id === id) {
+            if (this.employees[i].employeeId === id) {
                 index = i;
                 break;
             }

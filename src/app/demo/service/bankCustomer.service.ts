@@ -58,14 +58,14 @@ export class BankCustomerService {
 
     deleteCustomer(customer: BankCustomer) {
         return this.http.delete(
-            `http://localhost:8080/api/customers/${customer.id}`,
+            `http://localhost:8080/api/customers/${customer.customerId}`,
         );
     }
 
     deleteSelectedCustomers(customers: BankCustomer[]) {
         for (const customer of customers) {
             this.http.delete(
-                `http://localhost:8080/api/customers/${customer.id}`,
+                `http://localhost:8080/api/customers/${customer.customerId}`,
             ).subscribe();
         }
     }

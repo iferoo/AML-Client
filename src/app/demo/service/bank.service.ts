@@ -57,14 +57,14 @@ export class BankService {
 
     deleteBank(bank: Bank) {
         return this.http.delete(
-            `http://localhost:8080/api/banks/${bank.id}`,
+            `http://localhost:8080/api/banks/${bank.bankId}`,
         );
     }
 
     deleteSelectedBanks(banks: Bank[]) {
         for (const bank of banks) {
             this.http.delete(
-                `http://localhost:8080/api/banks/${bank.id}`,
+                `http://localhost:8080/api/banks/${bank.bankId}`,
             ).subscribe();
         }
     }

@@ -59,14 +59,14 @@ export class BranchService {
 
     deleteBranch(branch: Branch) {
         return this.http.delete(
-            `http://localhost:8080/api/branches/${branch.id}`,
+            `http://localhost:8080/api/branches/${branch.branchId}`,
         );
     }
 
     deleteSelectedBranches(branches: Branch[]) {
         for (const branch of branches) {
             this.http.delete(
-                `http://localhost:8080/api/branches/${branch.id}`,
+                `http://localhost:8080/api/branches/${branch.branchId}`,
             ).subscribe();
         }
     }

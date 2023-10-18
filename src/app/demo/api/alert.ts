@@ -1,7 +1,7 @@
 import {Account} from './account';
 
 export interface Alert {
-    id?: number;
+    alertId?: number;
     account?: Account;
 
 }

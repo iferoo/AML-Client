@@ -67,14 +67,14 @@ export class TransferService {
 
     deleteTransfer(transfer: Transfer) {
         return this.http.delete(
-            `http://localhost:8080/api/transfers/${transfer.id}`,
+            `http://localhost:8080/api/transfers/${transfer.transferId}`,
         );
     }
 
     deleteSelectedTransfers(transfers: Transfer[]) {
         for (const transfer of transfers) {
             this.http.delete(
-                `http://localhost:8080/api/transfers/${transfer.id}`,
+                `http://localhost:8080/api/transfers/${transfer.transferId}`,
             ).subscribe();
         }
     }

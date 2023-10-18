@@ -1,5 +1,5 @@
 export interface Bank {
-    id?: number;
+    bankId?: number;
     name?: string;
     createdAt?: string;
     isDeleted?: boolean;

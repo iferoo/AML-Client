@@ -60,7 +60,7 @@ export class AccountsComponent implements OnInit {
         this.accountTypes = ['Saving', 'Current'];
 
         this.cols = [
-            {field: 'id', header: 'Id'},
+            {field: 'accountId', header: 'Id'},
             {field: 'type', header: 'Type'},
             {field: 'balance', header: 'Balance'},
             {field: 'branch.address', header: 'Branch'},
@@ -71,7 +71,7 @@ export class AccountsComponent implements OnInit {
 
     openNew() {
         this.account = {
-            id: 0,
+            accountId: 0,
             branch: {},
             balance: 0,
             isDeleted: false,
@@ -100,7 +100,7 @@ export class AccountsComponent implements OnInit {
         this.deleteAccountsDialog = false;
         for (let account of this.selectedAccounts) {
             this.accountService.deleteAccount(account).subscribe((account: Account) => {
-                this.accounts[account.id! - 1] = account;
+                this.accounts[account.accountId! - 1] = account;
             });
         }
         // this.accountService.deleteSelectedAccounts(this.selectedAccounts);
@@ -112,7 +112,7 @@ export class AccountsComponent implements OnInit {
     confirmDelete() {
         this.deleteAccountDialog = false;
         this.accountService.deleteAccount(this.account).subscribe((account: Account) => {
-            this.accounts[account.id! - 1] = account;
+            this.accounts[account.accountId! - 1] = account;
         });
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Account Deleted', life: 3000});
         this.account = {};
@@ -126,11 +126,11 @@ export class AccountsComponent implements OnInit {
     saveAccount() {
         this.submitted = true;
         // @ts-ignore
-        if (this.account.type && this.account.balance > 0 && this.account.customer?.id && this.account.branch?.id && this.account.employee?.id) {
-            if (this.account.id) {
+        if (this.account.type && this.account.balance > 0 && this.account.customer?.customerId && this.account.branch?.branchId && this.account.employee?.employeeId) {
+            if (this.account.accountId) {
 
                 this.accountService.updateAccount(this.account).subscribe((account: Account) => {
-                    this.accounts[this.findIndexById(account.id)] = account;
+                    this.accounts[this.findIndexById(account.accountId)] = account;
                 });
 
                 this.messageService.add({
@@ -162,7 +162,7 @@ export class AccountsComponent implements OnInit {
         let index = -1;
         for (let i = 0; i < this.accounts.length; i++) {
             // @ts-ignore
-            if (this.accounts[i].id === id) {
+            if (this.accounts[i].accountId === id) {
                 index = i;
                 break;
             }
@@ -174,7 +174,7 @@ export class AccountsComponent implements OnInit {
     filterEmployees(branch: Branch) {
         // @ts-ignore
         let filteredEmployees = this.employees.filter((employee: Employee) => {
-            if (employee.branch?.id === branch.id) {
+            if (employee.branch?.branchId === branch.branchId) {
                 return employee;
             }
         });

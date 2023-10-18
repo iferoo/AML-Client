@@ -2,7 +2,7 @@ import {Bank} from './bank';
 import {Branch} from './branch';
 
 export interface Employee {
-    id?: number;
+    employeeId?: number;
     name?: string;
     salary?: number;
     email?: string;

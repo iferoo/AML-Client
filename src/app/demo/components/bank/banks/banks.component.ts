@@ -36,7 +36,7 @@ export class BanksComponent implements OnInit {
         });
 
         this.cols = [
-            {field: 'id', header: 'Id'},
+            {field: 'bankId', header: 'Id'},
             {field: 'name', header: 'Name'},
         ];
 
@@ -69,7 +69,7 @@ export class BanksComponent implements OnInit {
         this.deleteBanksDialog = false;
         for(let bank of this.selectedBanks) {
             this.bankService.deleteBank(bank).subscribe((bank: Bank) => {
-                this.banks[bank.id! - 1] = bank;
+                this.banks[bank.bankId! - 1] = bank;
             });
         }
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Banks Deleted', life: 3000});
@@ -79,7 +79,7 @@ export class BanksComponent implements OnInit {
     confirmDelete() {
         this.deleteBankDialog = false;
         this.bankService.deleteBank(this.bank).subscribe((bank: Bank) => {
-            this.banks[bank.id! - 1] = bank;
+            this.banks[bank.bankId! - 1] = bank;
         });
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Bank Deleted', life: 3000});
         this.bank = {};
@@ -93,10 +93,10 @@ export class BanksComponent implements OnInit {
     saveEmployee() {
         this.submitted = true;
         if (this.bank.name) {
-            if (this.bank.id) {
+            if (this.bank.bankId) {
 
                 this.bankService.updateBank(this.bank).subscribe((bank: Bank) => {
-                    this.banks[this.findIndexById(bank.id)] = bank;
+                    this.banks[this.findIndexById(bank.bankId)] = bank;
                 });
 
                 this.messageService.add({
@@ -128,7 +128,7 @@ export class BanksComponent implements OnInit {
     findIndexById(id: number | undefined): number {
         let index = -1;
         for (let i = 0; i < this.banks.length; i++) {
-            if (this.banks[i].id === id) {
+            if (this.banks[i].bankId === id) {
                 index = i;
                 break;
             }

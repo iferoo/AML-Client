@@ -57,14 +57,14 @@ export class EmployeeService {
 
     deleteEmployee(employee: Employee) {
         return this.http.delete(
-            `http://localhost:8080/api/employees/${employee.id}`,
+            `http://localhost:8080/api/employees/${employee.employeeId}`,
         );
     }
 
     deleteSelectedEmployees(employees: Employee[]) {
         for (const employee of employees) {
             this.http.delete(
-                `http://localhost:8080/api/employees/${employee.id}`,
+                `http://localhost:8080/api/employees/${employee.employeeId}`,
             ).subscribe();
         }
     }

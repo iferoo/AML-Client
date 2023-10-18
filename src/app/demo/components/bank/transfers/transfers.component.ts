@@ -95,7 +95,7 @@ export class TransfersComponent implements OnInit {
         ];
 
         this.cols = [
-            {field: 'id', header: 'Id'},
+            {field: 'transferId', header: 'Id'},
             {field: 'transaction.method', header: 'Method'},
             {field: 'transaction.operation', header: 'Operation'},
             {field: 'transaction.amount', header: 'Amount'},
@@ -110,7 +110,7 @@ export class TransfersComponent implements OnInit {
 
     openNew() {
         this.transfer = {
-            id: 0,
+            transferId: 0,
             reciever: {},
             transaction: {
                 method: 'teller',
@@ -152,7 +152,7 @@ export class TransfersComponent implements OnInit {
         this.deleteTransferDialog = false;
         this.transferService.deleteTransfer(this.transfer).subscribe((transfer: Transfer) => {
         });
-        this.transfers = this.transfers.filter(transfer => transfer.id !== this.transfer.id);
+        this.transfers = this.transfers.filter(transfer => transfer.transferId !== this.transfer.transferId);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Transfer Deleted', life: 3000});
         this.transfer = {};
     }
@@ -219,7 +219,7 @@ export class TransfersComponent implements OnInit {
         let index = -1;
         for (let i = 0; i < this.transfers.length; i++) {
             // @ts-ignore
-            if (this.transfers[i].id === id) {
+            if (this.transfers[i].transferId === id) {
                 index = i;
                 break;
             }

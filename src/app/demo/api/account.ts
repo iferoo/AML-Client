@@ -3,7 +3,7 @@ import {Employee} from './employee';
 import {Branch} from './branch';
 
 export interface Account {
-    id?: number;
+    accountId?: number;
     type?: string;
     balance?: number;
     customer?: BankCustomer;

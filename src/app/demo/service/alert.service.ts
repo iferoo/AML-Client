@@ -67,14 +67,14 @@ export class AlertService {
 
     deleteAlert(alert: Alert) {
         return this.http.delete(
-            `http://localhost:8080/api/alerts/${alert.id}`,
+            `http://localhost:8080/api/alerts/${alert.alertId}`,
         );
     }
 
     deleteSelectedAlerts(alerts: Alert[]) {
         for (const alert of alerts) {
             this.http.delete(
-                `http://localhost:8080/api/alerts/${alert.id}`,
+                `http://localhost:8080/api/alerts/${alert.alertId}`,
             ).subscribe();
         }
     }

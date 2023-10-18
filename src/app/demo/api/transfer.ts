@@ -2,7 +2,7 @@ import {Account} from './account';
 import {Transaction} from './transaction';
 
 export interface Transfer {
-    id?: number;
+    transferId?: number;
     status?: string;
     reciever?: Account | null;
     transaction?: Transaction;

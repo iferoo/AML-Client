@@ -29,7 +29,7 @@ export class AlertsComponent implements OnInit {
         });
 
         this.cols = [
-            {field: 'id', header: 'Id'},
+            {field: 'alertId', header: 'Id'},
             {field: 'account.id', header: 'AccountId'},
         ];
 
@@ -39,7 +39,7 @@ export class AlertsComponent implements OnInit {
     findIndexById(id: number | undefined): number {
         let index = -1;
         for (let i = 0; i < this.alerts.length; i++) {
-            if (this.alerts[i].id === id) {
+            if (this.alerts[i].alertId === id) {
                 index = i;
                 break;
             }

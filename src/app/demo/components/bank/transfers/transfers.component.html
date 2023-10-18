@@ -70,7 +70,7 @@
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
                         <th pSortableColumn="id">Id
-                            <p-sortIcon field="id"></p-sortIcon>
+                            <p-sortIcon field="transferId"></p-sortIcon>
                         </th>
                         <th pSortableColumn="method">Method
                             <p-sortIcon field="method"></p-sortIcon>
@@ -109,7 +109,7 @@
                         </td>
 
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
-                            {{transfer.id}}
+                            {{transfer.transferId}}
                         </td>
 
                         <td style="width:14%; min-width:10rem;">
@@ -129,7 +129,7 @@
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Sender ID</span>
-                            {{transfer.transaction?.account?.id}}
+                            {{transfer.transaction?.account?.accountId}}
                         </td>
 
                         <td style="width:14%; min-width:10rem;">
@@ -139,7 +139,7 @@
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Reciever ID</span>
-                            {{transfer.reciever?.id}}
+                            {{transfer.reciever?.accountId}}
                         </td>
 
                         <td style="width:14%; min-width:10rem;">
@@ -228,15 +228,15 @@
                     <p-dropdown
                         [(ngModel)]="transfer.transaction!.account"
                         [filter]="true"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.account!.id}"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.transaction!.account!.accountId}"
                         [options]="accounts"
-
                         inputId="operation"
                         optionDisabled="isDeleted"
-                        optionLabel="id"
+                        optionLabel="accountId"
+                        optionValue="accountId"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !transfer.transaction!.account!.id"
+                    <small *ngIf="submitted && !transfer.transaction!.account!.accountId"
                            class="ng-dirty ng-invalid">{{transfer.transaction?.operation == 'transfer' ? 'Sender is required.' : 'Account is required.'}}</small>
                 </div>
 
@@ -245,14 +245,14 @@
                     <p-dropdown
                         [(ngModel)]="transfer.reciever"
                         [filter]="true"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.reciever?.id}"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !transfer.reciever?.accountId}"
                         [options]="accounts"
                         inputId="operation"
                         optionDisabled="isDeleted"
-                        optionLabel="id"
+                        optionLabel="accountId"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !transfer.reciever?.id" class="ng-dirty ng-invalid">Reciever is
+                    <small *ngIf="submitted && !transfer.reciever?.accountId" class="ng-dirty ng-invalid">Reciever is
                         required.</small>
                 </div>
 
@@ -294,7 +294,7 @@
         <p-dialog [(visible)]="deleteTransferDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="transfer">Are you sure you want to delete <b>{{transfer.id}}</b>?</span>
+                <span *ngIf="transfer">Are you sure you want to delete <b>{{transfer.transferId}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button (click)="deleteTransferDialog = false" class="p-button-text" icon="pi pi-times" label="No"

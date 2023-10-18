@@ -71,7 +71,7 @@
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
                         <th pSortableColumn="id">Id
-                            <p-sortIcon field="id"></p-sortIcon>
+                            <p-sortIcon field="accountId"></p-sortIcon>
                         </th>
                         <th pSortableColumn="type">Type
                             <p-sortIcon field="type"></p-sortIcon>
@@ -103,7 +103,7 @@
                             <p-tableCheckbox [value]="account"></p-tableCheckbox>
                         </td>
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
-                            {{account.id}}
+                            {{account.accountId}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Type</span>
@@ -187,14 +187,14 @@
                     <p-dropdown
                         [(ngModel)]="account.customer"
                         [disabled]="isEdit"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.customer?.id}"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.customer?.customerId}"
                         [options]="customers"
                         inputId="customer"
                         optionLabel="name"
                         optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !account.customer?.id" class="ng-dirty ng-invalid">Customer is
+                    <small *ngIf="submitted && !account.customer?.customerId" class="ng-dirty ng-invalid">Customer is
                         required.</small>
                 </div>
 
@@ -203,14 +203,14 @@
                     <p-dropdown
                         [(ngModel)]="account.branch"
                         [disabled]="isEdit"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.branch?.id}"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.branch?.branchId}"
                         [options]="branches"
                         inputId="branch"
                         optionLabel="address"
                         optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !account.branch?.id" class="ng-dirty ng-invalid">Branch is
+                    <small *ngIf="submitted && !account.branch?.branchId" class="ng-dirty ng-invalid">Branch is
                         required.</small>
                 </div>
 
@@ -218,14 +218,14 @@
                     <label>Employee</label>
                     <p-dropdown
                         [(ngModel)]="account.employee"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.employee?.id}"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !account.employee?.employeeId}"
                         [options]="filterEmployees(account.branch!)"
                         inputId="employee"
                         optionLabel="name"
                         optionDisabled="isDeleted"
                         placeholder="Select">
                     </p-dropdown>
-                    <small *ngIf="submitted && !account.employee?.id" class="ng-dirty ng-invalid">Employee is
+                    <small *ngIf="submitted && !account.employee?.employeeId" class="ng-dirty ng-invalid">Employee is
                         required.</small>
                 </div>
 
@@ -242,7 +242,7 @@
         <p-dialog [(visible)]="deleteAccountDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="account">Are you sure you want to delete <b>{{account.id}}</b>?</span>
+                <span *ngIf="account">Are you sure you want to delete <b>{{account.accountId}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button (click)="deleteAccountDialog = false" class="p-button-text" icon="pi pi-times" label="No"

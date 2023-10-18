@@ -69,12 +69,12 @@ export class TransactionsComponent implements OnInit {
 
     openNew() {
         this.employee = {
-            id: 0,
+            employeeId: 0,
             name: '',
             email: '',
             salary: 0,
             bank: {
-                id: 1,
+                bankId: 1,
                 name: 'CIB'
             },
             branch: {}
@@ -109,7 +109,7 @@ export class TransactionsComponent implements OnInit {
         this.deleteEmployeeDialog = false;
         this.employeeService.deleteEmployee(this.employee).subscribe((employee: Employee) => {
         });
-        this.employees = this.employees.filter(employee => employee.id !== this.employee.id);
+        this.employees = this.employees.filter(employee => employee.employeeId !== this.employee.employeeId);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000});
         this.employee = {};
     }
@@ -123,11 +123,11 @@ export class TransactionsComponent implements OnInit {
         this.submitted = true;
 
 
-        if (this.employee.id) {
+        if (this.employee.employeeId) {
             this.employeeService.updateEmployee(this.employee).subscribe((employee: Employee) => {
                 this.employee = employee;
             });
-            this.employees[this.findIndexById(this.employee.id)] = this.employee;
+            this.employees[this.findIndexById(this.employee.employeeId)] = this.employee;
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
@@ -156,7 +156,7 @@ export class TransactionsComponent implements OnInit {
         let index = -1;
         for (let i = 0; i < this.employees.length; i++) {
             // @ts-ignore
-            if (this.employees[i].id === id) {
+            if (this.employees[i].employeeId === id) {
                 index = i;
                 break;
             }

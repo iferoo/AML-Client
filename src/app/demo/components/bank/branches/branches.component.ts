@@ -30,7 +30,7 @@ export class BranchesComponent implements OnInit {
         });
 
         this.cols = [
-            {field: 'id', header: 'Id'},
+            {field: 'branchId', header: 'Id'},
             {field: 'address', header: 'Address'},
             {field: 'city', header: 'City'},
             {field: 'bank.name', header: 'Bank'},
@@ -67,7 +67,7 @@ export class BranchesComponent implements OnInit {
         this.deleteBranchesDialog = false;
         for (let branch of this.selectedBranches) {
             this.branchService.deleteBranch(branch).subscribe((branch: Branch) => {
-                this.branches[branch.id! - 1] = branch;
+                this.branches[branch.branchId! - 1] = branch;
             });
         }
         // this.branches = this.branches.filter(branches => !this.selectedBranches.includes(branches));
@@ -78,7 +78,7 @@ export class BranchesComponent implements OnInit {
     confirmDelete() {
         this.deleteBranchDialog = false;
         this.branchService.deleteBranch(this.branch).subscribe((branch: Branch) => {
-            this.branches[branch.id! - 1] = branch;
+            this.branches[branch.branchId! - 1] = branch;
         });
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
         this.branch = {};
@@ -95,11 +95,11 @@ export class BranchesComponent implements OnInit {
         if (this.branch.address && this.branch.city) {
 
             if (this.branch.address?.trim()) {
-                if (this.branch.id) {
+                if (this.branch.branchId) {
 
                     this.branchService.updateBranch(this.branch).subscribe((branch: Branch) => {
                     });
-                    this.branches[this.findIndexById(this.branch.id)] = this.branch;
+                    this.branches[this.findIndexById(this.branch.branchId)] = this.branch;
 
                     this.messageService.add({
                         severity: 'success',
@@ -109,10 +109,10 @@ export class BranchesComponent implements OnInit {
                     });
                 } else {
 
-                    this.branch.id = 0;
+                    this.branch.branchId = 0;
 
                     this.branch.bank = {
-                        id: 1,
+                        bankId: 1,
                         name: 'CIB'
                     };
 
@@ -137,7 +137,7 @@ export class BranchesComponent implements OnInit {
         let index = -1;
         for (let i = 0; i < this.branches.length; i++) {
             // @ts-ignore
-            if (this.branches[i].id === id) {
+            if (this.branches[i].branchId === id) {
                 index = i;
                 break;
             }

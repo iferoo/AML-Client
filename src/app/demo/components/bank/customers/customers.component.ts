@@ -52,7 +52,7 @@ export class CustomersComponent implements OnInit {
         );
 
         this.cols = [
-            {field: 'id', header: 'Id'},
+            {field: 'customerId', header: 'Id'},
             {field: 'name', header: 'Name'},
             {field: 'address', header: 'Address'},
             {field: 'email', header: 'Email'},
@@ -114,7 +114,7 @@ export class CustomersComponent implements OnInit {
     saveCustomer() {
         this.submitted = true;
         if (this.customer.name && this.customer.address && this.customer.email) {
-            if (this.customer.id) {
+            if (this.customer.customerId) {
 
                 this.customerService.updateCustomer(this.customer).subscribe((customer: Customer) => {
                     this.customers[this.findIndexById(customer.id)] = customer;
@@ -150,7 +150,7 @@ export class CustomersComponent implements OnInit {
         let index = -1;
         for (let i = 0; i < this.customers.length; i++) {
             // @ts-ignore
-            if (this.customers[i].id === id) {
+            if (this.customers[i].customerId === id) {
                 index = i;
                 break;
             }
