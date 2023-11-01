@@ -19,8 +19,8 @@
                             icon="pi pi-plus"
                             label="New"
                             pButton
-                            pRipple>
-                        </button>
+                            pRipple
+                        ></button>
                         <button
                             (click)="deleteSelectedBanks()"
                             [disabled]="!selectedBanks || !selectedBanks.length"
@@ -28,13 +28,16 @@
                             icon="pi pi-trash"
                             label="Delete"
                             pButton
-                            pRipple>
-                        </button>
+                            pRipple
+                        ></button>
                         <button
-                            (click)="dt.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export"
+                            (click)="dt.exportCSV()"
+                            class="p-button-help"
+                            icon="pi pi-upload"
+                            label="Export"
                             pButton
-                            pRipple>
-                        </button>
+                            pRipple
+                        ></button>
                     </div>
                 </ng-template>
             </p-toolbar>
@@ -43,25 +46,33 @@
                 #dt
                 [(selection)]="selectedBanks"
                 [columns]="cols"
-                [globalFilterFields]="['id','name']"
+                [globalFilterFields]="['id', 'name']"
                 [paginator]="true"
                 [rowHover]="true"
-                [rowsPerPageOptions]="[10,20,30]"
+                [rowsPerPageOptions]="[10, 20, 30]"
                 [rows]="10"
                 [rows]="10"
                 [showCurrentPageReport]="true"
                 [value]="banks"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"
-                responsiveLayout="scroll" selectionMode="multiple">
-
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                dataKey="id"
+                responsiveLayout="scroll"
+                selectionMode="multiple"
+            >
                 <ng-template pTemplate="caption">
-                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <div
+                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                    >
                         <h5 class="m-0">Manage Banks</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input (input)="onGlobalFilter(dt, $event)" class="w-full sm:w-auto" pInputText
-                                   placeholder="Search..."
-                                   type="text"/>
+                            <input
+                                (input)="onGlobalFilter(dt, $event)"
+                                class="w-full sm:w-auto"
+                                pInputText
+                                placeholder="Search..."
+                                type="text"
+                            />
                         </span>
                     </div>
                 </ng-template>
@@ -70,16 +81,20 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="id">Id
+                        <th pSortableColumn="id">
+                            Id
                             <p-sortIcon field="bankId"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="name">Name
+                        <th pSortableColumn="name">
+                            Name
                             <p-sortIcon field="name"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="createdAt">Created At
+                        <th pSortableColumn="createdAt">
+                            Created At
                             <p-sortIcon field="createdAt"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="createdAt">Deleted At
+                        <th pSortableColumn="createdAt">
+                            Deleted At
                             <p-sortIcon field="createdAt"></p-sortIcon>
                         </th>
                         <th>Actions</th>
@@ -91,30 +106,38 @@
                         <td>
                             <p-tableCheckbox [value]="bank"></p-tableCheckbox>
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
-                            {{bank.bankId}}
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Id</span>
+                            {{ bank.bankId }}
                         </td>
-                        <td style="width:14%; min-width:10rem;">
+                        <td style="width: 14%; min-width: 10rem">
                             <span class="p-column-title">Name</span>
-                            {{bank.name}}
+                            {{ bank.name }}
                         </td>
-                        <td style="width:14%; min-width:10rem;">
+                        <td style="width: 14%; min-width: 10rem">
                             <span class="p-column-title">Created At</span>
-                            {{bank.createdAt | date}}
+                            {{ bank.createdAt | date }}
                         </td>
-                        <td style="width:14%; min-width:10rem;">
+                        <td style="width: 14%; min-width: 10rem">
                             <span class="p-column-title">Deleted At</span>
-                            {{bank.deletedAt | date}}
+                            {{ bank.deletedAt | date }}
                         </td>
                         <td>
                             <div class="flex" *ngIf="!bank.isDeleted">
-                                <button (click)="editBank(bank)" class="p-button-rounded p-button-success mr-2"
-                                        icon="pi pi-pencil"
-                                        pButton
-                                        pRipple></button>
-                                <button (click)="deleteEmployee(bank)" class="p-button-rounded p-button-warning"
-                                        icon="pi pi-trash" pButton
-                                        pRipple></button>
+                                <button
+                                    (click)="editBank(bank)"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    icon="pi pi-pencil"
+                                    pButton
+                                    pRipple
+                                ></button>
+                                <button
+                                    (click)="deleteEmployee(bank)"
+                                    class="p-button-rounded p-button-warning"
+                                    icon="pi pi-trash"
+                                    pButton
+                                    pRipple
+                                ></button>
                             </div>
                         </td>
                     </tr>
@@ -122,59 +145,121 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="bankDialog"
-                  [modal]="true"
-                  [style]="{width: '450px'}"
-                  class="p-fluid"
-                  header="Product Details">
-
+        <p-dialog
+            [(visible)]="bankDialog"
+            [modal]="true"
+            [style]="{ width: '450px' }"
+            class="p-fluid"
+            header="Product Details"
+        >
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="name">Name</label>
                     <input
                         [(ngModel)]="bank.name"
-                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !bank.name}"
-                        autofocus id="name"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !bank.name
+                        }"
+                        autofocus
+                        id="name"
                         pInputText
                         required
-                        type="text"/>
-                    <small *ngIf="submitted && !bank.name" class="ng-dirty ng-invalid">Bank Name is required.</small>
+                        type="text"
+                    />
+                    <small
+                        *ngIf="submitted && !bank.name"
+                        class="ng-dirty ng-invalid"
+                        >Bank Name is required.</small
+                    >
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button (click)="hideDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
-                        pRipple></button>
-                <button (click)="saveEmployee()" class="p-button-text" icon="pi pi-check" label="Save" pButton
-                        pRipple></button>
+                <button
+                    (click)="hideDialog()"
+                    class="p-button-text"
+                    icon="pi pi-times"
+                    label="Cancel"
+                    pButton
+                    pRipple
+                ></button>
+                <button
+                    (click)="saveEmployee()"
+                    class="p-button-text"
+                    icon="pi pi-check"
+                    label="Save"
+                    pButton
+                    pRipple
+                ></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteBankDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
+        <p-dialog
+            [(visible)]="deleteBankDialog"
+            [modal]="true"
+            [style]="{ width: '450px' }"
+            header="Confirm"
+        >
             <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="bank">Are you sure you want to delete <b>{{bank.name}}</b>?</span>
+                <i
+                    class="pi pi-exclamation-triangle mr-3"
+                    style="font-size: 2rem"
+                ></i>
+                <span *ngIf="bank"
+                    >Are you sure you want to delete <b>{{ bank.name }}</b
+                    >?</span
+                >
             </div>
             <ng-template pTemplate="footer">
-                <button (click)="deleteBankDialog = false" class="p-button-text" icon="pi pi-times" label="No"
-                        pButton
-                        pRipple></button>
-                <button (click)="confirmDelete()" class="p-button-text" icon="pi pi-check" label="Yes" pButton
-                        pRipple></button>
+                <button
+                    (click)="deleteBankDialog = false"
+                    class="p-button-text"
+                    icon="pi pi-times"
+                    label="No"
+                    pButton
+                    pRipple
+                ></button>
+                <button
+                    (click)="confirmDelete()"
+                    class="p-button-text"
+                    icon="pi pi-check"
+                    label="Yes"
+                    pButton
+                    pRipple
+                ></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteBanksDialog" [modal]="true" [style]="{width:'450px'}" header="Confirm">
+        <p-dialog
+            [(visible)]="deleteBanksDialog"
+            [modal]="true"
+            [style]="{ width: '450px' }"
+            header="Confirm"
+        >
             <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <i
+                    class="pi pi-exclamation-triangle mr-3"
+                    style="font-size: 2rem"
+                ></i>
                 <span>Are you sure you want to delete selected Banks?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button (click)="deleteBanksDialog = false" class="p-button-text" icon="pi pi-times" label="No"
-                        pButton
-                        pRipple></button>
-                <button (click)="confirmDeleteSelected()" class="p-button-text" icon="pi pi-check" label="Yes" pButton
-                        pRipple></button>
+                <button
+                    (click)="deleteBanksDialog = false"
+                    class="p-button-text"
+                    icon="pi pi-times"
+                    label="No"
+                    pButton
+                    pRipple
+                ></button>
+                <button
+                    (click)="confirmDeleteSelected()"
+                    class="p-button-text"
+                    icon="pi pi-check"
+                    label="Yes"
+                    pButton
+                    pRipple
+                ></button>
             </ng-template>
         </p-dialog>
     </div>
