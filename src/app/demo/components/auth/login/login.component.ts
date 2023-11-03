@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { Login } from '../../../api/auth/login';
-import { AuthService } from '../../../service/auth.service';
+import { AuthService } from '../../../service/auth/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
@@ -59,14 +59,14 @@ export class LoginComponent implements OnInit {
                             'loginUser',
                             JSON.stringify(this.userLogin),
                         );
-                    }else {
-                        localStorage.removeItem('loginUser')
+                    } else {
+                        localStorage.removeItem('loginUser');
                     }
                     this.router.navigate(['/']);
                 }
             },
             (error: any) => {
-                console.log(error)
+                console.log(error);
                 this.messageService.add({
                     severity: 'error',
                     detail: 'email or password is incorrect',

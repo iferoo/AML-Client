@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Login } from '../api/auth/login';
+import { Login } from '../../api/auth/login';
 
 @Injectable()
 export class AuthService {
@@ -23,5 +23,9 @@ export class AuthService {
     loginStatus(): boolean {
         // console.log(!!localStorage.getItem('token'))
         return !!localStorage.getItem('token');
+    }
+
+    getToken(): any {
+        return localStorage.getItem('token');
     }
 }
