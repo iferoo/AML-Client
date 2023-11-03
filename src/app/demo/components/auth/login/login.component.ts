@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
         public layoutService: LayoutService,
         public authService: AuthService,
         public router: Router,
+        private messageService: MessageService,
     ) {}
 
     ngOnInit(): void {
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
         let loginUser: Login = JSON.parse(localStorage.getItem('loginUser'));
         if (loginUser) {
             this.userLogin = loginUser;
+            this.isRemembered = true;
         }
         if (this.authService.loginStatus()) {
             this.router.navigate(['/']);
@@ -47,19 +49,29 @@ export class LoginComponent implements OnInit {
             isRemembered: this.isRemembered,
         });
 
-        this.authService.login(this.userLogin).subscribe((token: any) => {
-            console.log(token)
-            if (token != null) {
-                console.log(token);
-                localStorage.setItem('token', token);
-                if (this.isRemembered) {
-                    localStorage.setItem(
-                        'loginUser',
-                        JSON.stringify(this.userLogin),
-                    );
+        this.authService.login(this.userLogin).subscribe(
+            (token: any) => {
+                if (token != null) {
+                    console.log(token);
+                    localStorage.setItem('token', token);
+                    if (this.isRemembered) {
+                        localStorage.setItem(
+                            'loginUser',
+                            JSON.stringify(this.userLogin),
+                        );
+                    }else {
+                        localStorage.removeItem('loginUser')
+                    }
+                    this.router.navigate(['/']);
                 }
-                this.router.navigate(['/']);
-            }
-        });
+            },
+            (error: any) => {
+                console.log(error)
+                this.messageService.add({
+                    severity: 'error',
+                    detail: 'email or password is incorrect',
+                });
+            },
+        );
     }
 }

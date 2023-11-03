@@ -7,6 +7,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import {MessagesModule} from "primeng/messages";
+import {ToastModule} from "primeng/toast";
+import {RippleModule} from "primeng/ripple";
 
 @NgModule({
     imports: [
@@ -16,8 +19,11 @@ import { InputTextModule } from 'primeng/inputtext';
         CheckboxModule,
         InputTextModule,
         FormsModule,
-        PasswordModule
+        PasswordModule,
+        MessagesModule,
+        ToastModule,
+        RippleModule,
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent],
 })
-export class LoginModule { }
+export class LoginModule {}
