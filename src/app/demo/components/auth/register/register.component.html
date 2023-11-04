@@ -1,4 +1,3 @@
-<p-toast position="bottom-center"></p-toast>
 <div
     class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
 >
@@ -30,24 +29,48 @@
                 class="w-full surface-card py-8 px-5 sm:px-8"
                 style="border-radius: 53px"
             >
-                <!--                <div class="text-center mb-5">-->
-                <!--                    <img src="assets/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3">-->
-                <!--                    <div class="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>-->
-                <!--                    <span class="text-600 font-medium">Sign in to continue</span>-->
-                <!--                </div>-->
-
                 <div>
+                    <label
+                        class="block text-900 text-xl font-medium mb-2"
+                        for="firstName"
+                        >First Name</label
+                    >
+                    <input
+                        [(ngModel)]="userRegister.firstname"
+                        class="w-full md:w-30rem w-full mb-5"
+                        id="firstName"
+                        pInputText
+                        placeholder="First Name"
+                        style="padding: 1rem"
+                        type="text"
+                    />
+
+                    <label
+                        class="block text-900 text-xl font-medium mb-2"
+                        for="lastName"
+                        >Last Name</label
+                    >
+                    <input
+                        [(ngModel)]="userRegister.lastname"
+                        class="w-full md:w-30rem w-full mb-5"
+                        id="lastName"
+                        pInputText
+                        placeholder="Last Name"
+                        style="padding: 1rem"
+                        type="text"
+                    />
+
                     <label
                         class="block text-900 text-xl font-medium mb-2"
                         for="email1"
                         >Email</label
                     >
                     <input
-                        [(ngModel)]="userLogin.email"
+                        [(ngModel)]="userRegister.email"
                         class="w-full md:w-30rem mb-5"
                         id="email1"
                         pInputText
-                        placeholder="Email address"
+                        placeholder="Email Address"
                         style="padding: 1rem"
                         type="text"
                     />
@@ -58,47 +81,30 @@
                         >Password</label
                     >
                     <p-password
-                        [(ngModel)]="userLogin.password"
+                        [(ngModel)]="userRegister.password"
                         [toggleMask]="true"
                         id="password1"
                         inputStyleClass="w-full p-3 md:w-30rem"
                         placeholder="Password"
                         styleClass="mb-5"
                     ></p-password>
+
                     <div>
                         <button
-                            (click)="login()"
+                            (click)="register()"
                             class="w-full p-3 text-xl mb-2"
-                            label="Sign In"
+                            label="Register"
                             pButton
                             pRipple
                         ></button>
-
-                        <div
-                            class="flex align-items-center justify-content-between gap-5"
-                        >
-                            <div class="flex align-items-center">
-                                <p-checkbox
-                                    [(ngModel)]="isRemembered"
-                                    [binary]="true"
-                                    id="rememberme1"
-                                    styleClass="mr-2"
-                                ></p-checkbox>
-                                <label for="rememberme1">Remember me</label>
-                            </div>
-                            <div style="display: flex; flex-direction: column">
-                                <a
-                                    class="font-medium no-underline ml-2 text-right cursor-pointer"
-                                    style="color: var(--primary-color)"
-                                    >Forgot password?</a
-                                >
-                                <a
-                                    routerLink="/auth/register"
-                                    class="font-medium no-underline ml-2 text-right cursor-pointer"
-                                    style="color: var(--primary-color)"
-                                    >Register</a
-                                >
-                            </div>
+                        <div class="flex justify-content-end">
+                            <a
+                                class="font-medium no-underline ml-2 text-right cursor-pointer"
+                                routerLink="/auth/login"
+                                style="color: var(--primary-color)"
+                            >
+                                login
+                            </a>
                         </div>
                     </div>
                 </div>
