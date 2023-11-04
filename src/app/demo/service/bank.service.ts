@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
-import { Bank } from '../../api/bank';
+import { Bank } from '../api/bank';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class BankService {
     constructor(private http: HttpClient) {}
 
     fetchBanks() {
-        return this.http.get<Bank[]>('http://localhost:8080/api/v1/banks').pipe(
+        return this.http.get<Bank[]>(`${environment.API_URL}/banks`).pipe(
             map((banks) => {
                 const banksArray: Bank[] = [];
                 for (const bank of banks) {
@@ -25,7 +26,7 @@ export class BankService {
 
     addBank(bank: Bank): any {
         return this.http
-            .post<Bank>('http://localhost:8080/api/banks', bank)
+            .post<Bank>(`${environment.API_URL}/banks`, bank)
             .pipe(
                 map((bank) => {
                     return bank;
@@ -37,7 +38,7 @@ export class BankService {
     }
 
     updateBank(bank: Bank): any {
-        return this.http.put('http://localhost:8080/api/v1/banks', bank).pipe(
+        return this.http.put(`${environment.API_URL}/banks`, bank).pipe(
             map((bank) => {
                 return bank;
             }),
@@ -49,14 +50,14 @@ export class BankService {
 
     deleteBank(bank: Bank) {
         return this.http.delete(
-            `http://localhost:8080/api/v1/banks/${bank.bankId}`,
+            `${environment.API_URL}/banks/${bank.bankId}`,
         );
     }
 
     deleteSelectedBanks(banks: Bank[]) {
         for (const bank of banks) {
             this.http
-                .delete(`http://localhost:8080/api/v1/banks/${bank.bankId}`)
+                .delete(`${environment.API_URL}/banks/${bank.bankId}`)
                 .subscribe();
         }
     }

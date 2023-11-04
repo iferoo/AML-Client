@@ -17,7 +17,7 @@ import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { BranchService } from './demo/service/branch.service';
 import { EmployeeService } from './demo/service/employee.service';
-import { BankService } from './demo/service/auth/bank.service';
+import { BankService } from './demo/service/bank.service';
 import { BankCustomerService } from './demo/service/bankCustomer.service';
 import { AccountService } from './demo/service/account.service';
 import { TransferService } from './demo/service/transfer.service';

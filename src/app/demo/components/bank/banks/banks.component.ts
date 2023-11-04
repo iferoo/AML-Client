@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {Table} from 'primeng/table';
 import {Bank} from '../../../api/bank';
-import {BankService} from '../../../service/auth/bank.service';
+import {BankService} from '../../../service/bank.service';
 
 
 @Component({
