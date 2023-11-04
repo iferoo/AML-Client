@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, throwError} from 'rxjs';
 import {Transfer} from '../api/transfer';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class TransferService {
@@ -10,7 +11,7 @@ export class TransferService {
 
     fetchTransfers() {
         return this.http
-            .get<Transfer[]>('http://localhost:8080/api/transfers')
+            .get<Transfer[]>(`${environment.API_URL}/transfers`)
             .pipe(
                 // @ts-ignore
                 map(transfers => {
@@ -36,7 +37,7 @@ export class TransferService {
         // };
 
         return this.http.post<Transfer>(
-            'http://localhost:8080/api/transfers',
+            `${environment.API_URL}/transfers`,
             transfer)
             .pipe(
                 map(transfer => {
@@ -53,7 +54,7 @@ export class TransferService {
 
         return this.http
             .put(
-                'http://localhost:8080/api/transfers',
+                `${environment.API_URL}/transfers`,
                 transfer)
             .pipe(
                 map(branch => {
@@ -67,14 +68,14 @@ export class TransferService {
 
     deleteTransfer(transfer: Transfer) {
         return this.http.delete(
-            `http://localhost:8080/api/transfers/${transfer.transferId}`,
+            `${environment.API_URL}/transfers/${transfer.transferId}`,
         );
     }
 
     deleteSelectedTransfers(transfers: Transfer[]) {
         for (const transfer of transfers) {
             this.http.delete(
-                `http://localhost:8080/api/transfers/${transfer.transferId}`,
+                `${environment.API_URL}/transfers/${transfer.transferId}`,
             ).subscribe();
         }
     }

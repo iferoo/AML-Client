@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Branch} from '../api/branch';
 import {catchError, map, throwError} from 'rxjs';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class BranchService {
@@ -10,7 +11,7 @@ export class BranchService {
 
     fetchBranches() {
         return this.http
-            .get<Branch[]>('http://localhost:8080/api/branches')
+            .get<Branch[]>(`${environment.API_URL}/branches`)
             .pipe(
                 // @ts-ignore
                 map(branches => {
@@ -29,7 +30,7 @@ export class BranchService {
 
     addBranch(branch: Branch): any {
         return this.http.post<Branch>(
-            'http://localhost:8080/api/branches',
+            `${environment.API_URL}/branches`,
             branch)
             .pipe(
                 map(branch => {
@@ -45,7 +46,7 @@ export class BranchService {
     updateBranch(branch: Branch): any {
         return this.http
             .put(
-                'http://localhost:8080/api/branches',
+                `${environment.API_URL}/branches`,
                 branch)
             .pipe(
                 map(branch => {
@@ -59,14 +60,14 @@ export class BranchService {
 
     deleteBranch(branch: Branch) {
         return this.http.delete(
-            `http://localhost:8080/api/branches/${branch.branchId}`,
+            `${environment.API_URL}/branches/${branch.branchId}`,
         );
     }
 
     deleteSelectedBranches(branches: Branch[]) {
         for (const branch of branches) {
             this.http.delete(
-                `http://localhost:8080/api/branches/${branch.branchId}`,
+                `${environment.API_URL}/branches/${branch.branchId}`,
             ).subscribe();
         }
     }

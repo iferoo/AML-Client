@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, throwError} from 'rxjs';
 import {BankCustomer} from '../api/bankCustomer';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class BankCustomerService {
@@ -10,7 +11,7 @@ export class BankCustomerService {
 
     fetchCustomers() {
         return this.http
-            .get<BankCustomer[]>('http://localhost:8080/api/customers')
+            .get<BankCustomer[]>(`${environment.API_URL}/customers`)
             .pipe(
                 // @ts-ignore
                 map(customers => {
@@ -29,7 +30,7 @@ export class BankCustomerService {
 
     addCustomer(customer: BankCustomer): any {
         return this.http.post<BankCustomer>(
-            'http://localhost:8080/api/customers',
+            `${environment.API_URL}/customers`,
             customer)
             .pipe(
                 map(customer => {
@@ -44,7 +45,7 @@ export class BankCustomerService {
     updateCustomer(customer: BankCustomer): any {
         return this.http
             .put(
-                'http://localhost:8080/api/customers',
+                `${environment.API_URL}/customers`,
                 customer)
             .pipe(
                 map(branch => {
@@ -58,14 +59,14 @@ export class BankCustomerService {
 
     deleteCustomer(customer: BankCustomer) {
         return this.http.delete(
-            `http://localhost:8080/api/customers/${customer.customerId}`,
+            `${environment.API_URL}/customers/${customer.customerId}`,
         );
     }
 
     deleteSelectedCustomers(customers: BankCustomer[]) {
         for (const customer of customers) {
             this.http.delete(
-                `http://localhost:8080/api/customers/${customer.customerId}`,
+                `${environment.API_URL}/customers/${customer.customerId}`,
             ).subscribe();
         }
     }

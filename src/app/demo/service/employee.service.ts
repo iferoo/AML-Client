@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, throwError} from 'rxjs';
 import {Employee} from '../api/employee';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class EmployeeService {
@@ -9,7 +10,7 @@ export class EmployeeService {
     }
     fetchEmployees() {
         return this.http
-            .get<Employee[]>('http://localhost:8080/api/employees')
+            .get<Employee[]>(`${environment.API_URL}/employees`)
             .pipe(
                 // @ts-ignore
                 map(employees => {
@@ -28,7 +29,7 @@ export class EmployeeService {
 
     addEmployee(employee: Employee): any {
         return this.http.post<Employee>(
-            'http://localhost:8080/api/employees',
+            `${environment.API_URL}/employees`,
             employee)
             .pipe(
                 map(employee => {
@@ -43,7 +44,7 @@ export class EmployeeService {
     updateEmployee(employee: Employee): any {
         return this.http
             .put(
-                'http://localhost:8080/api/employees',
+                `${environment.API_URL}/employees`,
                 employee)
             .pipe(
                 map(branch => {
@@ -57,14 +58,14 @@ export class EmployeeService {
 
     deleteEmployee(employee: Employee) {
         return this.http.delete(
-            `http://localhost:8080/api/employees/${employee.employeeId}`,
+            `${environment.API_URL}/employees/${employee.employeeId}`,
         );
     }
 
     deleteSelectedEmployees(employees: Employee[]) {
         for (const employee of employees) {
             this.http.delete(
-                `http://localhost:8080/api/employees/${employee.employeeId}`,
+                `${environment.API_URL}/employees/${employee.employeeId}`,
             ).subscribe();
         }
     }

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, throwError} from 'rxjs';
 import {Account} from '../api/account';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class AccountService {
@@ -10,7 +11,7 @@ export class AccountService {
 
     fetchAccounts() {
         return this.http
-            .get<Account[]>('http://localhost:8080/api/accounts')
+            .get<Account[]>(`${environment.API_URL}/accounts`)
             .pipe(
                 // @ts-ignore
                 map(accounts => {
@@ -29,7 +30,7 @@ export class AccountService {
 
     addAccount(account: Account): any {
         return this.http.post<Account>(
-            'http://localhost:8080/api/accounts',
+            `${environment.API_URL}/accounts`,
             account)
             .pipe(
                 map(account => {
@@ -44,7 +45,7 @@ export class AccountService {
     updateAccount(account: Account): any {
         return this.http
             .put(
-                'http://localhost:8080/api/accounts',
+                `${environment.API_URL}/accounts`,
                 account)
             .pipe(
                 map(branch => {
@@ -58,14 +59,14 @@ export class AccountService {
 
     deleteAccount(account: Account) {
         return this.http.delete(
-            `http://localhost:8080/api/accounts/${account.accountId}`,
+            `${environment.API_URL}/accounts/${account.accountId}`,
         );
     }
 
     deleteSelectedAccounts(accounts: Account[]) {
         for (const account of accounts) {
             this.http.delete(
-                `http://localhost:8080/api/accounts/${account.accountId}`,
+                `${environment.API_URL}/accounts/${account.accountId}`,
             ).subscribe();
         }
     }

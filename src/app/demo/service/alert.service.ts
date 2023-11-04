@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, throwError} from 'rxjs';
 import {Alert} from '../api/alert';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class AlertService {
@@ -10,7 +11,7 @@ export class AlertService {
 
     fetchAlerts() {
         return this.http
-            .get<Alert[]>('http://localhost:8080/api/alerts')
+            .get<Alert[]>(`${environment.API_URL}/alerts`)
             .pipe(
                 // @ts-ignore
                 map(alerts => {
@@ -36,7 +37,7 @@ export class AlertService {
         // };
 
         return this.http.post<Alert>(
-            'http://localhost:8080/api/alerts',
+            `${environment.API_URL}/alerts`,
             alert)
             .pipe(
                 map(alert => {
@@ -53,7 +54,7 @@ export class AlertService {
 
         return this.http
             .put(
-                'http://localhost:8080/api/alerts',
+                `${environment.API_URL}/alerts`,
                 alert)
             .pipe(
                 map(branch => {
@@ -67,14 +68,14 @@ export class AlertService {
 
     deleteAlert(alert: Alert) {
         return this.http.delete(
-            `http://localhost:8080/api/alerts/${alert.alertId}`,
+            `${environment.API_URL}/alerts/${alert.alertId}`,
         );
     }
 
     deleteSelectedAlerts(alerts: Alert[]) {
         for (const alert of alerts) {
             this.http.delete(
-                `http://localhost:8080/api/alerts/${alert.alertId}`,
+                `${environment.API_URL}/alerts/${alert.alertId}`,
             ).subscribe();
         }
     }
