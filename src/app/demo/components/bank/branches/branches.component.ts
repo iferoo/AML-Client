@@ -6,6 +6,7 @@ import {BranchService} from '../../../service/branch.service';
 import {EgyptGovernments} from '../../../api/governments';
 
 @Component({
+    selector:'app-branches',
     templateUrl: './branches.component.html',
     providers: [MessageService]
 })

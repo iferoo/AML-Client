@@ -6,6 +6,7 @@ import {BankService} from '../../../service/bank.service';
 
 
 @Component({
+    selector: 'app-banks',
     templateUrl: './banks.component.html',
     providers: [MessageService]
 })
