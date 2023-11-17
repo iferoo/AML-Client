@@ -25,11 +25,11 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Bank',
                 items: [
-                    // {
-                    //     label: 'Bank',
-                    //     icon: 'pi pi-fw pi-dollar',
-                    //     routerLink: ['/bank']
-                    // },
+                    {
+                        label: 'Bank',
+                        icon: 'pi pi-fw pi-dollar',
+                        routerLink: ['/banks']
+                    },
                     {
                         label: 'Customers',
                         icon: 'pi pi-fw pi-users',

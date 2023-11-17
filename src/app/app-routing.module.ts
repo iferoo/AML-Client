@@ -26,11 +26,11 @@ import { AuthGuardService } from './demo/service/auth-guard.service';
                             canActivate: [AuthGuardService],
                         },
                         {
-                            path: 'settings',
+                            path: 'banks',
                             loadChildren: () =>
                                 import(
-                                    './demo/components/administrator/settings/settings.module'
-                                ).then((m) => m.SettingsModule),
+                                    './demo/components/bank/banks/banks.module'
+                                ).then((m) => m.BanksModule),
                             canActivate: [AuthGuardService],
                         },
                         {
